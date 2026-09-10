@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Tower Defense Beta 36.0 Mech.02 Special</title>
+<title>Ultra Tower Defense • Production Build</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#111722;color:#fff;font-family:Arial,Helvetica,sans-serif;text-align:center}
@@ -10186,6 +10186,61 @@ html.performanceSafeMode .mech02Rocket,
 html.performanceSafeMode .mech02Explosion,
 html.performanceSafeMode .mech02BarrageTrackBlast{box-shadow:none!important}
 
+/* ===== DIAMOND TOWERS + MAP THEMES ===== */
+.roleDiamond{color:#bff8ff!important;border-color:#5cecff!important;background:#123b58!important}
+.diamondSlot{border-color:#68e9ff!important;background:linear-gradient(145deg,#f7ffff,#d8f7ff)!important;color:#12334e!important}
+.diamondPickerTab,.diamondIndexTab{border-color:#68e9ff!important;color:#bff8ff!important}
+.unit.diamondblaster,.unit.diamondprism,.unit.diamondfrost{width:86px;height:92px;filter:drop-shadow(0 0 12px #6feaff) drop-shadow(0 9px 6px rgba(0,0,0,.4))}
+.diamondAura{position:absolute;left:50%;top:56%;width:82px;height:38px;transform:translate(-50%,-50%);border:3px solid rgba(110,239,255,.72);border-radius:50%;box-shadow:0 0 17px rgba(95,232,255,.75);animation:diamondPulse 1.7s ease-in-out infinite}
+.diamondBody{position:absolute;left:26px;top:26px;width:35px;height:45px;background:linear-gradient(135deg,#eaffff,#57cbe8 52%,#21628c);border:3px solid #cfffff;border-radius:11px;transform:skewY(-8deg)}
+.diamondCore{position:absolute;left:36px;top:39px;width:15px;height:18px;color:#fff;font-size:19px;font-weight:1000;text-shadow:0 0 10px #fff,0 0 18px #5cecff;z-index:4}
+.diamondBarrel{position:absolute;left:51px;top:37px;width:35px;height:11px;background:linear-gradient(#ecffff,#4dd5ef);border:2px solid #155777;border-radius:7px;transform:rotate(-12deg);z-index:5;box-shadow:0 0 10px #69f2ff}
+.diamondGem{position:absolute;left:50%;top:9px;transform:translateX(-50%);color:#fff;font-size:25px;font-weight:1000;text-shadow:0 0 8px #fff,0 0 18px #52dcff;z-index:8}
+.diamondprism .diamondAura{border-color:rgba(255,157,252,.78);box-shadow:0 0 19px rgba(255,157,252,.8)}
+.prismBody{background:linear-gradient(135deg,#fff5ff,#d46bdf 50%,#4c2a8f);border-color:#ffe4ff;transform:rotate(45deg) skewY(-8deg)}
+.prismShard{position:absolute;width:13px;height:30px;border:2px solid #fff;border-radius:5px;box-shadow:0 0 9px currentColor;z-index:5}
+.ps1{left:9px;top:33px;color:#ff68d5;background:#ff68d5;transform:rotate(-24deg)}
+.ps2{right:8px;top:31px;color:#6ff5ff;background:#6ff5ff;transform:rotate(24deg)}
+.ps3{left:37px;top:59px;color:#fff06a;background:#fff06a;transform:rotate(90deg)}
+.diamondfrost .diamondAura{border-color:rgba(185,245,255,.88);box-shadow:0 0 20px rgba(129,221,255,.9)}
+.frostBody{background:linear-gradient(135deg,#efffff,#77c9ef 52%,#24558b);border-color:#d9ffff}
+.frostCrown{position:absolute;left:22px;top:8px;width:43px;height:20px;border:3px solid #d9ffff;border-bottom:0;clip-path:polygon(0 100%,18% 0,50% 75%,80% 0,100% 100%);background:#83eaff;z-index:6}
+.frostOrb{position:absolute;left:57px;top:42px;width:18px;height:18px;border-radius:50%;background:#eaffff;border:3px solid #58dcff;box-shadow:0 0 13px #58dcff;z-index:6}
+.diamondBlasterShot,.diamondPrismShot,.diamondFrostShot{background:#eaffff!important;box-shadow:0 0 13px #5cecff!important}
+.diamondPrismShot{background:#ffb8ff!important;box-shadow:0 0 13px #ff70e8!important}
+.diamondFrostShot{background:#d7ffff!important;box-shadow:0 0 13px #66dfff!important}
+@keyframes diamondPulse{50%{transform:translate(-50%,-50%) scale(1.08);opacity:.76}}
+
+#mapPicker{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-top:4px}
+.mapChoice{min-height:74px;padding:10px 8px;border:2px solid #36536f;border-radius:12px;background:#0b1725;color:#d8eaff;display:grid;place-items:center;gap:2px;font-size:20px}
+.mapChoice b{font-size:10px;color:#fff}.mapChoice span{font-size:8px;color:#86a5c2}.mapChoice.active{border-color:#83efbd;box-shadow:0 0 14px rgba(83,239,189,.24);background:#12352e}
+#game.mapGrasslands{background:radial-gradient(circle at 20% 20%,rgba(227,255,165,.25),transparent 30%),linear-gradient(145deg,#4d9f52,#183e38 80%)}
+#game.mapCrystal{background:radial-gradient(circle at 18% 26%,rgba(121,243,255,.35),transparent 18%),radial-gradient(circle at 78% 64%,rgba(219,130,255,.28),transparent 22%),linear-gradient(145deg,#163c66,#29194e 78%)}
+#game.mapVolcanic{background:radial-gradient(circle at 74% 24%,rgba(255,118,45,.38),transparent 22%),linear-gradient(145deg,#522b2a,#1b121e 80%)}
+#game.mapFrozen{background:radial-gradient(circle at 24% 22%,rgba(210,255,255,.42),transparent 22%),linear-gradient(145deg,#2d6f9a,#10243d 80%)}
+#game.mapCrystal #path{background:#786ca0;border-color:#59d8e9}
+#game.mapVolcanic #path{background:#8e5946;border-color:#e26c3e}
+#game.mapFrozen #path{background:#83b6c8;border-color:#c5f7ff}
+
+/* Fortress model: the existing #base hitbox remains the click target. */
+#base{font-size:0!important;background:linear-gradient(90deg,#52687c,#24384d)!important;border-color:#d7f7ff!important;box-shadow:0 0 0 3px rgba(113,224,255,.2),0 0 20px rgba(73,215,255,.25);overflow:visible}
+.baseTower{position:absolute;left:16px;top:23px;width:58px;height:94px;background:linear-gradient(90deg,#91b3c7,#30495d);border:4px solid #dffbff;border-radius:10px 10px 5px 5px;box-shadow:0 0 12px rgba(107,222,255,.55)}
+.baseTower:before,.baseTower:after{content:"";position:absolute;top:-18px;width:17px;height:29px;background:#6f9ab1;border:3px solid #dffbff;border-bottom:0;border-radius:5px 5px 0 0}
+.baseTower:before{left:4px}.baseTower:after{right:4px}
+.baseCore{position:absolute;left:50%;top:44px;width:25px;height:25px;transform:translateX(-50%) rotate(45deg);background:#bffaff;border:4px solid #49dfff;box-shadow:0 0 12px #53eaff,0 0 25px rgba(83,234,255,.75);z-index:3}
+.baseShield{position:absolute;left:50%;top:68px;width:78px;height:78px;transform:translate(-50%,-50%);border:3px solid rgba(152,245,255,.75);border-radius:50%;box-shadow:0 0 15px rgba(95,229,255,.5);z-index:2;pointer-events:none}
+#base.baseCritical{border-color:#ff6b77!important;box-shadow:0 0 0 3px rgba(255,75,101,.25),0 0 22px rgba(255,75,101,.55)}
+#base.baseCritical .baseCore{background:#ffb5a4;border-color:#ff5b63;box-shadow:0 0 13px #ff5b63}
+
+/* Readable enemy telemetry for normal and elite targets. */
+.enemy{z-index:25!important}.enemyName{position:absolute;left:50%;top:-31px;transform:translateX(-50%);font-size:8px;line-height:1;white-space:nowrap;color:#fff;font-weight:1000;text-shadow:0 1px 3px #000;pointer-events:none}.enemyShield{position:absolute;left:50%;top:-20px;transform:translateX(-50%);font-size:7px;color:#8feaff;font-weight:1000;white-space:nowrap;text-shadow:0 1px 3px #000;pointer-events:none}.enemyShield.empty{display:none}
+.enemy.enemyScout .ebody{background:linear-gradient(#efbb57,#8a4c23);border-color:#ffd46b}.enemy.enemyArmored .ebody{background:linear-gradient(#8f9cac,#3e4c5d);border-color:#d3e0eb}.enemy.enemyBrute .ebody{background:linear-gradient(#a0526e,#4a1932);border-color:#ff83a9}.enemy.enemyEmber .ebody{background:linear-gradient(#ff8b42,#8c271c);border-color:#ffc16a;box-shadow:0 0 12px #ff632d}.enemy.enemyFrost .ebody{background:linear-gradient(#9feaff,#28648b);border-color:#e2ffff}.enemy.enemyShieldGuard .ebody{background:linear-gradient(#8b7aff,#30236e);border-color:#c2b8ff;box-shadow:0 0 10px #806cff}
+.enemy.enemyScout .ehead{background:#f4d18a}.enemy.enemyArmored .ehead{background:#b6c6d8;border-color:#6e849a}.enemy.enemyEmber .ehead{background:#ff9e54;border-color:#9f2d1f}.enemy.enemyFrost .ehead{background:#cfffff;border-color:#56b7d9}.enemy.enemyShieldGuard .ehead{background:#bdb3ff;border-color:#6657c1}
+.enemy.boss .enemyName{font-size:9px;top:-37px;color:#ffe49b}
+.enemyShieldBar{position:absolute;left:2px;top:-3px;width:42px;height:3px;background:#112e43;border-radius:3px;overflow:hidden}.enemyShieldBar i{display:block;height:100%;background:#73eaff;box-shadow:0 0 8px #73eaff}
+.autoSkipCountdown{display:inline-flex;align-items:center;min-width:94px;height:22px;padding:0 7px;border:1px solid #36536f;border-radius:8px;color:#9ee9ff;font-size:9px;font-weight:1000;letter-spacing:.4px;white-space:nowrap;background:#081522}
+.autoSkipCountdown:empty{display:none}
+
 </style>
 </head>
 <body>
@@ -10376,6 +10431,23 @@ html.performanceSafeMode .mech02BarrageTrackBlast{box-shadow:none!important}
       </div>
     </section>
 
+    <section class="lobbySection" id="mapSelectSection">
+      <div class="lobbySectionHeader">
+        <div>
+          <div class="sectionKicker">BATTLEFIELD</div>
+          <h2>🗺️ Choose Map</h2>
+          <div class="sectionHint">Each map keeps the same rules but changes the battlefield atmosphere and route.</div>
+        </div>
+        <div class="selectedModePill">MAP: <b id="selectedMapText">Grasslands</b></div>
+      </div>
+      <div id="mapPicker" role="group" aria-label="Battlefield maps">
+        <button class="mapChoice active" data-map="grasslands" onclick="chooseMap('grasslands',this)">🌿<b>Grasslands</b><span>Open meadow</span></button>
+        <button class="mapChoice" data-map="crystal" onclick="chooseMap('crystal',this)">💎<b>Crystal Cavern</b><span>Prismatic route</span></button>
+        <button class="mapChoice" data-map="volcanic" onclick="chooseMap('volcanic',this)">🌋<b>Volcanic Rift</b><span>Molten hazard</span></button>
+        <button class="mapChoice" data-map="frozen" onclick="chooseMap('frozen',this)">❄️<b>Frozen Citadel</b><span>Icebound fortress</span></button>
+      </div>
+    </section>
+
     <section class="lobbySection" id="bossChallengeSection">
       <div id="bossLobbyArea">
         <div class="bossAreaTop">
@@ -10420,7 +10492,7 @@ html.performanceSafeMode .mech02BarrageTrackBlast{box-shadow:none!important}
           <h2>📚 Unit Index</h2>
           <div class="sectionHint">Search, filter, compare stats, roles, and special units.</div>
         </div>
-        <div id="unitIndexCount">30 UNITS</div>
+        <div id="unitIndexCount">33 UNITS</div>
       </div>
 
       <div id="unitIndexToolbar">
@@ -10446,6 +10518,7 @@ html.performanceSafeMode .mech02BarrageTrackBlast{box-shadow:none!important}
           <span class="roleBadge roleSpecial">🌟 SPECIAL</span>
           <span class="roleBadge roleUnique">🔮 UNIQUE</span>
           <span class="roleBadge roleCollab">🤝 COLLAB</span>
+          <span class="roleBadge roleDiamond">💎 DIAMOND</span>
         </div>
       </div>
 
@@ -10456,6 +10529,7 @@ html.performanceSafeMode .mech02BarrageTrackBlast{box-shadow:none!important}
         <button class="lobbyUnitTab" data-tab="special" onclick="setLobbyUnitTab('special',this)">SPECIAL</button>
         <button class="lobbyUnitTab" data-tab="unique" onclick="setLobbyUnitTab('unique',this)">UNIQUE</button>
         <button class="lobbyUnitTab" data-tab="owner" onclick="setLobbyUnitTab('owner',this)">OWNER</button>
+        <button class="lobbyUnitTab diamondIndexTab" data-tab="diamond" onclick="setLobbyUnitTab('diamond',this)">💎 DIAMOND</button>
         <button class="lobbyUnitTab collabIndexTab" data-tab="collab" onclick="setLobbyUnitTab('collab',this)">🤝 COLLAB</button>
       </div>
 
@@ -10495,6 +10569,10 @@ html.performanceSafeMode .mech02BarrageTrackBlast{box-shadow:none!important}
           <div class="lobbyUnit" data-category="owner" data-unit-type="macer">👑🔨<span>The Macer</span></div>
           <div class="lobbyUnit" data-category="owner" data-unit-type="beast">👑🐺<span>The Beast</span></div>
           <div class="lobbyUnit" data-category="owner" data-unit-type="superman">👑🦸<span>Superman</span></div>
+
+          <div class="lobbyUnit" data-category="diamond" data-unit-type="diamondblaster">💎⚡<span>Diamond Blaster</span></div>
+          <div class="lobbyUnit" data-category="diamond" data-unit-type="diamondprism">💎🌈<span>Diamond Prism</span></div>
+          <div class="lobbyUnit" data-category="diamond" data-unit-type="diamondfrost">💎❄️<span>Diamond Frost</span></div>
         </div>
 
         <aside id="unitIndexDetail">
@@ -10642,10 +10720,11 @@ html.performanceSafeMode .mech02BarrageTrackBlast{box-shadow:none!important}
     <b id="collabFusionProgress">0 / 3</b>
   </div>
 
-  <span id="versionHud" style="color:#7de7ff">🧪 BETA 36.0 MECH.02 SPECIAL</span>
+  <span id="versionHud" style="color:#7de7ff">🛡️ ULTRA PRODUCTION • MECH.02 SPECIAL</span>
 
   <button id="startWaveBtn" onclick="startWave()">🌊 START WAVE</button>
   <button id="autoSkipBtn" onclick="toggleAutoSkip()">⏭ Auto Skip: OFF</button>
+  <span id="autoSkipCountdown" class="autoSkipCountdown" aria-live="polite"></span>
   <button id="autoUpgradeBtn" onclick="toggleAutoUpgrade()">⚡ Auto Upgrade: OFF</button>
   <button id="autoAwakenBtn" onclick="toggleAutoAwaken()">✨ Auto Awaken: OFF</button>
   <button id="adminToggleBtn" onclick="toggleAdmin()">🛠 ADMIN</button>
@@ -10661,7 +10740,11 @@ html.performanceSafeMode .mech02BarrageTrackBlast{box-shadow:none!important}
 
 <div id="game">
   <div id="path"></div>
-  <div id="base">🏰</div>
+  <div id="base" aria-label="Fortress base">
+    <div class="baseTower"></div>
+    <div class="baseCore"></div>
+    <div class="baseShield"></div>
+  </div>
 </div>
 <div id="gameUnitPicker">
   <div id="gameUnitPickerHeader">
@@ -10669,8 +10752,8 @@ html.performanceSafeMode .mech02BarrageTrackBlast{box-shadow:none!important}
       <div class="gameUnitPickerTitle">🧰 UNIT COMMAND BAR</div>
       <div class="gameUnitPickerSub">Search, filter, compare, then click a unit to place it.</div>
     </div>
-    <div class="gamePickerHeaderActions">
-      <div id="gameUnitPickerCount">30 UNITS</div>
+      <div class="gamePickerHeaderActions">
+      <div id="gameUnitPickerCount">33 UNITS</div>
       <button id="gameUnitPickerToggle" type="button" onclick="toggleGameUnitPicker()">Hide Units ▲</button>
     </div>
   </div>
@@ -10706,6 +10789,7 @@ html.performanceSafeMode .mech02BarrageTrackBlast{box-shadow:none!important}
     <button class="gameUnitPickerTab" data-category="special" onclick="setGameUnitPickerCategory('special',this)">SPECIAL</button>
     <button class="gameUnitPickerTab" data-category="unique" onclick="setGameUnitPickerCategory('unique',this)">UNIQUE</button>
     <button class="gameUnitPickerTab" data-category="owner" onclick="setGameUnitPickerCategory('owner',this)">OWNER</button>
+    <button class="gameUnitPickerTab diamondPickerTab" data-category="diamond" onclick="setGameUnitPickerCategory('diamond',this)">💎 DIAMOND</button>
     <button class="gameUnitPickerTab collabPickerTab" data-category="collab" onclick="setGameUnitPickerCategory('collab',this)">🤝 COLLAB</button>
   </div>
 
@@ -10776,6 +10860,16 @@ html.performanceSafeMode .mech02BarrageTrackBlast{box-shadow:none!important}
 👑🦸<br><b>Superman</b><div class="tiny">OWNER • HEAT VISION • SOLAR IMPACT</div>
 </button>
 
+<button id="diamondBlasterSlot" class="slot diamondSlot" data-unit="diamondblaster" onclick="pickUnit(this)">
+💎⚡<br><b>Diamond Blaster</b><div class="tiny">DIAMOND • ARMOR PIERCING</div>
+</button>
+<button id="diamondPrismSlot" class="slot diamondSlot" data-unit="diamondprism" onclick="pickUnit(this)">
+💎🌈<br><b>Diamond Prism</b><div class="tiny">DIAMOND • CHAIN SPLASH</div>
+</button>
+<button id="diamondFrostSlot" class="slot diamondSlot" data-unit="diamondfrost" onclick="pickUnit(this)">
+💎❄️<br><b>Diamond Frost</b><div class="tiny">DIAMOND • FREEZE FIELD</div>
+</button>
+
 
 <button class="slot active" data-unit="archer" onclick="pickUnit(this)">🏹<br>Archer<div class="tiny">Fast • $0</div></button>
 <button class="slot" data-unit="vampire" onclick="pickUnit(this)">🧛<br>Vampire<div class="tiny">Bleed • $0</div></button>
@@ -10799,7 +10893,7 @@ html.performanceSafeMode .mech02BarrageTrackBlast{box-shadow:none!important}
 </div>
 </div>
 
-<div id="msg">BETA 36.0 MECH.02 SPECIAL: place units on grass, start waves, and test the Merchant bomb.</div>
+<div id="msg">ULTRA PRODUCTION: choose a map, place units on the grass, and start the wave.</div>
 
 <div id="admin">
   <div class="adminHeader">
@@ -11287,6 +11381,10 @@ const UNIT_ROLE_INFO={
   webslinger:{roles:['COLLAB','SPECIAL','CONTROL'],desc:'Original spider-themed collab hero that slows enemies with web shots and can trap the battlefield with Web Burst.'},
   collabfusion:{roles:['COLLAB','FUSION','UNIQUE','SPLASH','BOSS KILLER','CONTROL'],desc:'Automatic fusion of MAX Roaring Knight + MAX Flowery + MAX Web Slinger.'},
 
+  diamondblaster:{roles:['DIAMOND','DAMAGE','BOSS KILLER'],desc:'Diamond rail cannon that pierces armor with focused crystal bolts.'},
+  diamondprism:{roles:['DIAMOND','SPLASH','DAMAGE'],desc:'Prismatic tower that splits each shot into a short chain of rainbow beams.'},
+  diamondfrost:{roles:['DIAMOND','SLOW','SUPPORT'],desc:'Cryo-diamond tower that chills enemies and resists shielded pushes.'},
+
   exoticbutters:{roles:['OWNER','SPLASH','DAMAGE'],desc:'Owner unit with Butter Nuke after fusion.'},
   shadowdemon:{roles:['OWNER','CONTROL','DAMAGE'],desc:'Owner unit with Mega Black Hole after fusion.'},
   macer:{roles:['OWNER','BOSS KILLER','DAMAGE'],desc:"Owner unit with Thor's Hammer after fusion."},
@@ -11309,7 +11407,8 @@ const ROLE_CLASS={
   'UNIQUE':'roleUnique',
   'CONTROL':'roleControl',
   'FUSION':'roleFusion',
-  'COLLAB':'roleCollab'
+  'COLLAB':'roleCollab',
+  'DIAMOND':'roleDiamond'
 };
 
 function getUnitRoleInfo(type){
@@ -11332,7 +11431,8 @@ function addRoleBadgesToLobby(){
     'Ice Dragon':'dragonserpent','Mech Summoner':'mechsummoner','Titan':'titan',
     'Cupid':'cupid','Dictoctear':'dictoctear','Fire Mage':'firemage','Frankintein':'frankintein',
     'The Anomly':'anomly','Omega Cannon':'omegacannon','Roaring Knight':'roaringknight','Flowery':'flowery','Web Slinger':'webslinger','Exotic Butters':'exoticbutters','Shadow Demon':'shadowdemon',
-    'The Macer':'macer','The Beast':'beast','Superman':'superman'
+    'The Macer':'macer','The Beast':'beast','Superman':'superman',
+    'Diamond Blaster':'diamondblaster','Diamond Prism':'diamondprism','Diamond Frost':'diamondfrost'
   };
 
   document.querySelectorAll('#lobbyUnits .lobbyUnit').forEach(card=>{
@@ -11411,6 +11511,10 @@ const UNIT_ICON_INFO={
   flowery:{icon:'🌼',sigil:'♥',a:'#ffe271',b:'#856c20'},
   webslinger:{icon:'🕸️',sigil:'✣',a:'#7cc7ff',b:'#283c83'},
 
+  diamondblaster:{icon:'💎',sigil:'⚡',a:'#8df7ff',b:'#215c8f'},
+  diamondprism:{icon:'💎',sigil:'✦',a:'#ff9efc',b:'#5a2b83'},
+  diamondfrost:{icon:'💎',sigil:'❄',a:'#b9f5ff',b:'#2e6c9b'},
+
   anomly:{icon:'🟣',sigil:'◉',a:'#ba83ff',b:'#482872'},
   omegacannon:{icon:'🌌',sigil:'Ω',a:'#7ff5ff',b:'#243c83'},
   roaringknight:{icon:'🌑',sigil:'⚔',a:'#9f8dff',b:'#28224e'},
@@ -11448,6 +11552,12 @@ const UNIT_ICON_CATEGORY_STYLE={
     ribbon:'COLLAB',
     spark:'✦'
   },
+  DIAMOND:{
+    corner:'💎',
+    title:'DIAMOND',
+    ribbon:'DIAMOND',
+    spark:'◇'
+  },
   UNIQUE:{
     corner:'🔮',
     title:'UNIQUE',
@@ -11483,6 +11593,7 @@ function unitIconTier(type){
   const roles=(getUnitRoleInfo(type)?.roles||[]);
   if(roles.includes('OWNER')) return 'OWNER';
   if(roles.includes('COLLAB')) return 'COLLAB';
+  if(roles.includes('DIAMOND')) return 'DIAMOND';
   if(roles.includes('UNIQUE')) return 'UNIQUE';
   if(roles.includes('SPECIAL')) return 'SPECIAL';
   if(roles.includes('HERO')) return 'HERO';
@@ -11680,6 +11791,7 @@ function applyGameUnitPickerFilters(){
     const categoryMatch=
       gameUnitPickerCategory==='all' ||
       primary===gameUnitPickerCategory ||
+      (gameUnitPickerCategory==='diamond' && roles.includes('diamond')) ||
       (gameUnitPickerCategory==='collab' && roles.includes('collab'));
 
     const haystack=slot.dataset.pickerSearch || [
@@ -11732,6 +11844,7 @@ function gamePickerCategoryForType(type){
   const roles=info && Array.isArray(info.roles) ? info.roles : [];
 
   if(roles.includes('OWNER')) return 'owner';
+  if(roles.includes('DIAMOND')) return 'diamond';
   if(roles.includes('UNIQUE')) return 'unique';
   if(roles.includes('SPECIAL')) return 'special';
   if(roles.includes('HERO')) return 'hero';
@@ -11739,7 +11852,7 @@ function gamePickerCategoryForType(type){
 }
 
 function setGameUnitPickerCategory(category,btn){
-  const allowed=['all','normal','hero','special','unique','owner','collab'];
+  const allowed=['all','normal','hero','special','unique','owner','diamond','collab'];
   gameUnitPickerCategory=allowed.includes(category)?category:'all';
 
   document.querySelectorAll('.gameUnitPickerTab').forEach(tab=>{
@@ -11918,6 +12031,7 @@ function applyUnitIndexFilters(){
     const categoryMatch=
       currentLobbyUnitTab==='all' ||
       category===currentLobbyUnitTab ||
+      (currentLobbyUnitTab==='diamond' && roles.includes('diamond')) ||
       (currentLobbyUnitTab==='collab' && roles.includes('collab'));
 
     const haystack=[
@@ -11985,7 +12099,7 @@ function clearUnitIndexSearch(){
 }
 
 function setLobbyUnitTab(tab,btn){
-  const allowed=['all','normal','hero','special','unique','owner','collab'];
+  const allowed=['all','normal','hero','special','unique','owner','diamond','collab'];
   currentLobbyUnitTab=allowed.includes(tab)?tab:'all';
 
   document.querySelectorAll('.lobbyUnitTab').forEach(x=>{
@@ -11997,6 +12111,13 @@ function setLobbyUnitTab(tab,btn){
 }
 
 const TD_SAVE_KEY='towerDefenseBetaProSaveV1';
+const MAP_CONFIG={
+  grasslands:{name:'Grasslands',className:'mapGrasslands'},
+  crystal:{name:'Crystal Cavern',className:'mapCrystal'},
+  volcanic:{name:'Volcanic Rift',className:'mapVolcanic'},
+  frozen:{name:'Frozen Citadel',className:'mapFrozen'}
+};
+let selectedMap='grasslands';
 let savedProgress={
   wins:0,
   bestWave:0,
@@ -12006,6 +12127,7 @@ let savedProgress={
   selectedOmegaBoss:'yeti',
   bossModifiers:{hp:false,speed:false,damage:false},
   lobbyUnitTab:'all',
+  selectedMap:'grasslands',
   passTab:'merchant',
   passes:{
     merchantXp:0,
@@ -12494,6 +12616,7 @@ function saveGameProgress(showMessage=false){
     damage:!!bossLobbyModifiers.damage
   };
   savedProgress.lobbyUnitTab=currentLobbyUnitTab||'all';
+  savedProgress.selectedMap=MAP_CONFIG[selectedMap]?selectedMap:'grasslands';
   savedProgress.passTab=selectedPassTab||'merchant';
   normalizePassProgress();
 
@@ -12536,6 +12659,7 @@ function restoreSavedProgress(){
   selectedPassTab=savedProgress.passTab||'merchant';
 
   lobbyMode=savedProgress.lobbyMode||'Normal';
+  selectedMap=MAP_CONFIG[savedProgress.selectedMap]?savedProgress.selectedMap:'grasslands';
   selectedOmegaBoss=savedProgress.selectedOmegaBoss==='fire'?'fire':'yeti';
   bossChallengeEnabled=!!savedProgress.bossChallengeEnabled;
 
@@ -12566,6 +12690,7 @@ function restoreSavedProgress(){
 
   refreshBossLobbySummary();
   setLobbyUnitTab(savedProgress.lobbyUnitTab||'all');
+  applySelectedMap();
   updateProgressCard();
   renderPassCenter();
 }
@@ -12619,6 +12744,7 @@ function updateBossHealthHud(){
 
 function showWinScreen(){
   if(gameEnded)return;
+  clearAutoSkipTimer();
   gameEnded=true;
   waveRunning=false;
 
@@ -12639,6 +12765,7 @@ function showWinScreen(){
 
 function showLoseScreen(){
   if(gameEnded)return;
+  clearAutoSkipTimer();
   gameEnded=true;
   waveRunning=false;
 
@@ -12653,6 +12780,7 @@ function showLoseScreen(){
 }
 
 function restartMatch(){
+  clearAutoSkipTimer();
   closeOwnerAbilities();
   const uiResetIds=['upgrade','merchantPanel','ownerUpgradeQuick','megaFusionPanel','simpleAscendPanel'];
   for(const id of uiResetIds){
@@ -12693,6 +12821,7 @@ function restartMatch(){
 }
 
 function endToLobby(){
+  clearAutoSkipTimer();
   gameEnded=false;
   document.getElementById('endScreen').style.display='none';
 
@@ -12775,6 +12904,30 @@ function chooseLobbyMode(btn){
   saveGameProgress(false);
 }
 
+function applySelectedMap(){
+  const key=MAP_CONFIG[selectedMap]?selectedMap:'grasslands';
+  selectedMap=key;
+  const gameEl=document.getElementById('game');
+  if(gameEl){
+    Object.values(MAP_CONFIG).forEach(cfg=>gameEl.classList.remove(cfg.className));
+    gameEl.classList.add(MAP_CONFIG[key].className);
+  }
+  document.querySelectorAll('.mapChoice').forEach(btn=>{
+    const active=btn.dataset.map===key;
+    btn.classList.toggle('active',active);
+    btn.setAttribute('aria-pressed',active?'true':'false');
+  });
+  const label=document.getElementById('selectedMapText');
+  if(label) label.textContent=MAP_CONFIG[key].name;
+}
+
+function chooseMap(key){
+  selectedMap=MAP_CONFIG[key]?key:'grasslands';
+  applySelectedMap();
+  saveGameProgress(false);
+  msg('🗺️ '+MAP_CONFIG[selectedMap].name+' selected.');
+}
+
 function enterGame(){
   closeOwnerAbilities();
   const uiResetIds=['upgrade','merchantPanel','ownerUpgradeQuick','megaFusionPanel','simpleAscendPanel'];
@@ -12790,6 +12943,7 @@ function enterGame(){
   megaFusionDone=false;
   document.getElementById('lobby').style.display='none';
   document.getElementById('returnLobbyBtn').style.display='block';
+  applySelectedMap();
 
   // Fresh match state every time a mode is entered.
   clearEnemies();
@@ -13040,6 +13194,7 @@ function returnToLobby(){
 let lastCompletedWave=0;
 let selectedOwnerUnit=null;
 let selected='archer',baseHp=30,wave=1,eid=0,autoSkip=false,autoUpgrade=false,waveRunning=false,nextAuto=0,selectedPlaced=null,bombPlacementMode=false,autoAwaken=false,autoAwakenTimer=null,gameEnded=false;
+let autoSkipTimer=null,autoSkipDeadline=0,autoSkipGeneration=0;
 let pendingSpawns=0,spawnGeneration=0;
 const enemies=new Map(),units=[],summons=[],pillars=[],activeBombs=[],mechSummons=[];
 const stats={cupid:{damage:48,range:245,rate:650},dictoctear:{damage:185,range:285,rate:420},firemage:{damage:135,range:270,rate:480},frankintein:{damage:210,range:250,rate:620},mech02:{damage:520,range:310,rate:640},anomly:{damage:1000,range:260,rate:900},omegacannon:{damage:2500,range:360,rate:1600},roaringknight:{damage:4200,range:330,rate:1200},flowery:{damage:1800,range:300,rate:700},webslinger:{damage:1450,range:320,rate:520},collabfusion:{damage:18000,range:430,rate:320},beast:{damage:999999999999,range:999999,rate:110},superman:{damage:75000,range:999999,rate:180},macer:{damage:999999999999,range:999999,rate:1},shadowdemon:{damage:5000,range:850,rate:280},exoticbutters:{damage:Number.MAX_SAFE_INTEGER,range:999999,rate:120},vampire:{damage:34,range:190,rate:720},grimreaper:{damage:72,range:210,rate:1050},
@@ -13047,7 +13202,10 @@ archer:{damage:18,range:190,rate:620},cannon:{damage:55,range:165,rate:1200},las
 necromancer:{damage:34,range:225,rate:900},dragonrider:{damage:70,range:210,rate:1450},watermage:{damage:85,range:260,rate:900},dragonserpent:{damage:120,range:285,rate:1100},
 mechsummoner:{damage:28,range:230,rate:1000},
 titan:{damage:110,range:185,rate:1700},
-booster:{damage:0,range:170,rate:999999},merchant:{damage:0,range:0,rate:999999}
+booster:{damage:0,range:170,rate:999999},merchant:{damage:0,range:0,rate:999999},
+diamondblaster:{damage:260,range:390,rate:760},
+diamondprism:{damage:190,range:300,rate:680},
+diamondfrost:{damage:120,range:275,rate:740}
 };
 
 
@@ -13084,6 +13242,10 @@ const UNIT_GAMEPLAY_ABILITY_INFO={
   flowery:{icon:'🌼',name:'Chaos Bloom',desc:'Petals slow enemies. Chaos Bloom damages and slows the whole battlefield.'},
   webslinger:{icon:'🕸️',name:'Web Burst',desc:'Web attacks slow targets. Web Burst traps and damages enemies across the battlefield.'},
   collabfusion:{icon:'🤝',name:'Trinity Collapse',desc:'Combines Roaring power, Chaos Bloom, and Web control into one fused battlefield ability.'},
+
+  diamondblaster:{icon:'💎',name:'Piercing Bolt',desc:'Crystal bolts punch through armor and deal bonus damage to bosses.'},
+  diamondprism:{icon:'🌈',name:'Prism Split',desc:'Prismatic shots bounce into nearby enemies for chained splash damage.'},
+  diamondfrost:{icon:'❄️',name:'Crystal Chill',desc:'Diamond frost shots slow enemies and weaken their push.'},
 
   anomly:{icon:'🟣',name:'Tentacle Passive',desc:'Attacks trigger extra tentacle strikes.'},
   omegacannon:{icon:'🌌',name:'Omega Blast',desc:'Huge cannon explosions deal splash damage and bonus boss damage.'},
@@ -13163,6 +13325,11 @@ function updateBattleHud(force=false){
     const pct=Math.max(0,Math.min(100,(baseHp/baseMaxHp)*100));
     fill.style.width=pct+'%';
     fill.classList.toggle('baseDanger',pct<=30);
+    const fortress=document.getElementById('base');
+    if(fortress){
+      fortress.classList.toggle('baseCritical',pct<=30);
+      fortress.classList.toggle('baseHealthy',pct>30);
+    }
   }
 
   const waveEl=document.getElementById('wave');
@@ -13187,6 +13354,7 @@ function updateBattleHud(force=false){
   if(towers) towers.textContent=String(units.length);
   if(enemy) enemy.textContent=String(enemies.size);
 
+  updateAutoSkipCountdown();
   updateCollabFusionHud();
   refreshAdminPanel();
 }
@@ -13763,6 +13931,15 @@ function makeUnit(type,x,y){
    '<div class="m02FlamePort m02FlamePortL"></div>'+
    '<div class="m02FlamePort m02FlamePortR"></div>'+
    '<div class="m02Core">02</div>';
+ else if(type==='diamondblaster')el.innerHTML=
+   '<div class="diamondAura"></div><div class="diamondCore dbCore"></div>'+
+   '<div class="diamondBody"></div><div class="diamondBarrel dbBarrel"></div><div class="diamondGem dbGem">◇</div>';
+ else if(type==='diamondprism')el.innerHTML=
+   '<div class="diamondAura prismAura"></div><div class="diamondBody prismBody"></div>'+
+   '<div class="prismShard ps1"></div><div class="prismShard ps2"></div><div class="prismShard ps3"></div><div class="diamondGem prismGem">✦</div>';
+ else if(type==='diamondfrost')el.innerHTML=
+   '<div class="diamondAura frostAura"></div><div class="diamondBody frostBody"></div>'+
+   '<div class="frostCrown"></div><div class="frostOrb"></div><div class="diamondGem frostGem">❄</div>';
  else if(type==='firemage')el.innerHTML=
    '<div class="fireMageCape"></div>'+
    '<div class="fireMageBody"></div>'+
@@ -14794,19 +14971,54 @@ function awakenSelected(){
 
 ;
 
-function spawnEnemy(hp=100,speed=.75,boss=false){
-  hp*=window.modeEnemyHpMult||1;
-  speed*=window.modeEnemySpeedMult||1;
+const ENEMY_TYPE_ORDER=['grunt','scout','armored','brute','ember','frost','shieldguard'];
+const ENEMY_TYPES={
+  grunt:{label:'Grunt',className:'enemyGrunt',hp:1,speed:1,armor:0,shield:0,slowResist:0},
+  scout:{label:'Scout',className:'enemyScout',hp:.72,speed:1.55,armor:0,shield:0,slowResist:.1},
+  armored:{label:'Armored',className:'enemyArmored',hp:1.8,speed:.72,armor:.35,shield:0,slowResist:.2},
+  brute:{label:'Brute',className:'enemyBrute',hp:3.2,speed:.55,armor:.18,shield:0,slowResist:.28},
+  ember:{label:'Ember',className:'enemyEmber',hp:1.15,speed:1.05,armor:.05,shield:0,slowResist:.35},
+  frost:{label:'Frost',className:'enemyFrost',hp:1.35,speed:.82,armor:.08,shield:0,slowResist:.65},
+  shieldguard:{label:'Shield Guard',className:'enemyShieldGuard',hp:1.4,speed:.68,armor:.12,shield:220,slowResist:.4}
+};
+
+function enemyTypeForWave(index=0){
+  const offset=Math.max(0,Number(wave)||1)-1;
+  return ENEMY_TYPE_ORDER[(offset+Math.max(0,index|0))%ENEMY_TYPE_ORDER.length] || 'grunt';
+}
+
+function updateEnemyDefenseUi(e){
+  if(!e) return;
+  const shield=Math.max(0,Number(e.shield)||0);
+  if(e.shieldEl){
+    e.shieldEl.textContent=shield>0?'SHIELD '+Math.ceil(shield):'';
+    e.shieldEl.classList.toggle('empty',shield<=0);
+  }
+  if(e.shieldBar){
+    const max=Math.max(1,Number(e.maxShield)||1);
+    e.shieldBar.style.width=Math.max(0,Math.min(100,shield/max*100))+'%';
+  }
+}
+
+function spawnEnemy(hp=100,speed=.75,boss=false,enemyType=null){
+  const typeKey=ENEMY_TYPES[enemyType]?enemyType:(boss?'brute':enemyTypeForWave());
+  const cfg=ENEMY_TYPES[typeKey]||ENEMY_TYPES.grunt;
+  hp*=cfg.hp*(window.modeEnemyHpMult||1);
+  speed*=cfg.speed*(window.modeEnemySpeedMult||1);
 
   const el=document.createElement('div');
-  el.className='enemy';
+  el.className='enemy '+cfg.className;
 
   if(boss){
     const bossTypes=['bossTitan','bossDemon','bossMech','bossIce'];
     el.classList.add('boss',bossTypes[Math.floor(Math.random()*bossTypes.length)]);
   }
 
-  el.innerHTML='<div class="hpbar"><div class="hpfill"></div></div><div class="ehead"></div><div class="ebody"></div>';
+  el.innerHTML='<div class="enemyName">'+(boss?'BOSS ': '')+cfg.label+'</div>'+
+    '<div class="hpbar"><div class="hpfill"></div></div>'+ 
+    '<div class="enemyShieldBar"><i></i></div>'+ 
+    '<div class="enemyShield"></div>'+ 
+    '<div class="ehead"></div><div class="ebody"></div>';
   el.style.left='-60px';
   el.style.top=boss?'276px':'292px';
   game.appendChild(el);
@@ -14819,7 +15031,15 @@ function spawnEnemy(hp=100,speed=.75,boss=false){
     x:-60,
     speed,
     boss,
+    enemyType:typeKey,
+    enemyLabel:boss?'BOSS '+cfg.label:cfg.label,
+    armor:Math.max(0,Math.min(.9,Number(cfg.armor)||0)),
+    shield:Math.max(0,Number(cfg.shield)||0),
+    maxShield:Math.max(0,Number(cfg.shield)||0),
+    slowResistance:Math.max(0,Math.min(.95,Number(cfg.slowResist)||0)),
     bar:el.querySelector('.hpfill'),
+    shieldEl:el.querySelector('.enemyShield'),
+    shieldBar:el.querySelector('.enemyShieldBar i'),
     bleedUntil:0,
     nextBleedTick:0,
     bleedDamage:0,
@@ -14832,6 +15052,8 @@ function spawnEnemy(hp=100,speed=.75,boss=false){
     slow:1,
     wither:0
   });
+  updateEnemyDefenseUi(enemies.get(id));
+  return enemies.get(id);
 }
 
 
@@ -14848,9 +15070,9 @@ function spawnMany(n){
       if(gameEnded) return;
 
       if(window.modeAllBosses){
-        spawnEnemy(420+wave*55,(.5+wave*.008)*3,true);
+        spawnEnemy(420+wave*55,(.5+wave*.008)*3,true,enemyTypeForWave(i));
       }else{
-        spawnEnemy(100+wave*12,.72+wave*.015,false);
+        spawnEnemy(100+wave*12,.72+wave*.015,false,enemyTypeForWave(i));
       }
     },i*260);
   }
@@ -15081,17 +15303,66 @@ function scheduleUltraBossRush(){
   }
 }
 
-function startWave(){
-  if(gameEnded)return;
-
-  if(lastCompletedWave===wave && wave<10 && !autoSkip){
-    wave++;
-    updateBattleHud(true);
+function updateAutoSkipCountdown(){
+  const label=document.getElementById('autoSkipCountdown');
+  if(!label) return;
+  if(!autoSkip || !autoSkipTimer || !autoSkipDeadline){
+    label.textContent='';
+    return;
   }
+  const seconds=Math.max(0,Math.ceil((autoSkipDeadline-performance.now())/1000));
+  label.textContent=seconds>0?'NEXT WAVE IN '+seconds+'s':'STARTING…';
+}
 
+function clearAutoSkipTimer(){
+  if(autoSkipTimer){
+    clearTimeout(autoSkipTimer);
+    autoSkipTimer=null;
+  }
+  autoSkipDeadline=0;
+  autoSkipGeneration++;
+  updateAutoSkipCountdown();
+}
+
+function queueAutoSkip(delay=600){
+  clearAutoSkipTimer();
+  if(!autoSkip || gameEnded || waveRunning) return;
+
+  const generation=autoSkipGeneration;
+  autoSkipDeadline=performance.now()+Math.max(0,Number(delay)||0);
+
+  const tick=()=>{
+    if(generation!==autoSkipGeneration || !autoSkip || gameEnded || waveRunning){
+      return;
+    }
+    const remaining=autoSkipDeadline-performance.now();
+    if(remaining<=0){
+      autoSkipTimer=null;
+      autoSkipDeadline=0;
+      updateAutoSkipCountdown();
+      startWave({advance:true});
+      return;
+    }
+    updateAutoSkipCountdown();
+    autoSkipTimer=setTimeout(tick,Math.min(250,Math.max(30,remaining)));
+  };
+
+  autoSkipTimer=setTimeout(tick,0);
+  updateAutoSkipCountdown();
+}
+
+function startWave({advance=false}={}){
+  if(gameEnded)return;
   if(waveRunning){
     msg('Wave already running.');
     return;
+  }
+
+  clearAutoSkipTimer();
+
+  if(lastCompletedWave===wave && wave<10 && (!autoSkip || advance)){
+    wave++;
+    updateBattleHud(true);
   }
 
   waveRunning=true;
@@ -15128,6 +15399,10 @@ function startWave(){
 function toggleAutoSkip(){
   autoSkip=!autoSkip;
 
+  if(!autoSkip){
+    clearAutoSkipTimer();
+  }
+
   const btn=document.getElementById('autoSkipBtn');
   if(btn){
     btn.textContent='⏭ Auto Skip: '+(autoSkip?'ON':'OFF');
@@ -15136,7 +15411,7 @@ function toggleAutoSkip(){
   msg('Auto Skip '+(autoSkip?'ON':'OFF'));
 
   if(autoSkip && !waveRunning){
-    startWave();
+    startWave({advance:lastCompletedWave===wave});
   }
 }
 
@@ -15218,14 +15493,28 @@ function toggleAutoUpgrade(){
   refreshAutomationButtons();
 }
 
-function damage(e,a){
+function damage(e,a,options={}){
   if(!e || !enemies.has(e.id)) return;
 
+  let amount=Math.max(0,Number(a)||0);
   if(e.soulMarkUntil>performance.now()){
-    a*=1+(e.soulMarkPower||0);
+    amount*=1+(e.soulMarkPower||0);
   }
 
-  e.hp-=a;
+  if(e.armor && !options.ignoreArmor){
+    amount*=Math.max(.05,1-Math.min(.9,Math.max(0,e.armor)));
+  }
+
+  if(e.shield>0 && amount>0){
+    const absorbed=Math.min(e.shield,amount);
+    e.shield-=absorbed;
+    amount-=absorbed;
+    updateEnemyDefenseUi(e);
+  }
+
+  e.lastDamage=performance.now();
+  if(amount<=0) return;
+  e.hp-=amount;
 
   if(e.bar){
     e.bar.style.width=Math.max(0,e.hp/e.max*100)+'%';
@@ -16448,6 +16737,36 @@ function improvedStandardAttack(u,e,now){
     return;
   }
 
+  if(u.type==='diamondblaster'){
+    spawnStandardProjectile(u,e,'diamondBlasterShot',()=>{
+      // Crystal bolts are armor-piercing and hit bosses harder. The damage
+      // helper still consumes shields first, preserving enemy defenses.
+      damage(e,base*(e.boss?1.65:1.25),{ignoreArmor:true});
+      spawnStandardImpact(e,'diamondImpact');
+    },150);
+    return;
+  }
+
+  if(u.type==='diamondprism'){
+    spawnStandardProjectile(u,e,'diamondPrismShot',()=>{
+      damage(e,base);
+      standardSplash(e,125,en=>{
+        if(en!==e) damage(en,base*.72);
+      });
+      spawnStandardImpact(e,'prismImpact');
+    },145);
+    return;
+  }
+
+  if(u.type==='diamondfrost'){
+    spawnStandardProjectile(u,e,'diamondFrostShot',()=>{
+      damage(e,base);
+      applyCoreSlow(e,.48,2800);
+      spawnStandardImpact(e,'frostImpact');
+    },155);
+    return;
+  }
+
   damage(e,base);
 }
 
@@ -17025,6 +17344,9 @@ function shoot(u,e){
     case 'mechsummoner':
     case 'titan':
     case 'necromancer':
+    case 'diamondblaster':
+    case 'diamondprism':
+    case 'diamondfrost':
       improvedStandardAttack(u,e,now);
       return;
   }
@@ -17105,6 +17427,7 @@ function sellMerchant(){
 
 function closeMerchant(){document.getElementById('merchantPanel').style.display='none'}
 function clearEnemies(){
+  clearAutoSkipTimer();
   spawnGeneration++;
   pendingSpawns=0;
 
@@ -19407,6 +19730,10 @@ function getEnemyEffectiveSlow(e,now){
     slow=Math.min(slow,e.webSlingerSlow||.55);
   }
 
+  if(e.slowResistance>0 && slow<1){
+    slow=1-(1-slow)*(1-Math.min(.95,Math.max(0,e.slowResistance)));
+  }
+
   return Math.max(.05,slow);
 }
 
@@ -19737,9 +20064,7 @@ requestAnimationFrame(loop);return;}
    if(canWin && wave>=10){
      showWinScreen();
    }else if(autoSkip && !gameEnded){
-     wave++;
-     updateBattleHud(true);
-     setTimeout(startWave,window.modeWaveDelay||600);
+     queueAutoSkip(window.modeWaveDelay||600);
    }
  }
  
