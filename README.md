@@ -13,7 +13,7 @@ The goal of this project is to create a polished tower defense game with real 3D
 The project is being built around systems such as:
 
 - 🧍 Units with different stats, roles, and abilities
-- ⭐ Special, Hero, Owner, and Collab units
+- ⭐ Special, Hero, and Collab units
 - 🔥 Fire and explosive damage
 - 🤖 Special units such as **mech.02**
 - ⬆️ Unit upgrades
