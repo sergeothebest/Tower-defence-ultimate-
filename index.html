@@ -10240,6 +10240,13 @@ html.performanceSafeMode .mech02BarrageTrackBlast{box-shadow:none!important}
 .enemyShieldBar{position:absolute;left:2px;top:-3px;width:42px;height:3px;background:#112e43;border-radius:3px;overflow:hidden}.enemyShieldBar i{display:block;height:100%;background:#73eaff;box-shadow:0 0 8px #73eaff}
 .autoSkipCountdown{display:inline-flex;align-items:center;min-width:94px;height:22px;padding:0 7px;border:1px solid #36536f;border-radius:8px;color:#9ee9ff;font-size:9px;font-weight:1000;letter-spacing:.4px;white-space:nowrap;background:#081522}
 .autoSkipCountdown:empty{display:none}
+.audioSettings{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;padding:4px 6px;border:1px solid #36536f;border-radius:9px;background:#0b1725}
+.audioSettings button{padding:6px 8px;font-size:9px;line-height:1;white-space:nowrap}
+.audioSettings button.audioOn{border-color:#55e8b0;box-shadow:0 0 10px rgba(85,232,176,.22)}
+.audioSettings button.audioOff{opacity:.72;border-color:#5f7187}
+.audioVolume{display:inline-flex;align-items:center;gap:4px;color:#9bb5cf;font-size:8px;font-weight:900;white-space:nowrap}
+.audioVolume input{width:68px;accent-color:#67ddff;cursor:pointer}
+.audioVolume output{min-width:27px;color:#fff;font-variant-numeric:tabular-nums}
 
 </style>
 </head>
@@ -10720,6 +10727,19 @@ html.performanceSafeMode .mech02BarrageTrackBlast{box-shadow:none!important}
     <b id="collabFusionProgress">0 / 3</b>
   </div>
 
+  <div id="audioSettings" class="audioSettings" role="group" aria-label="Audio settings">
+    <button id="soundToggleBtn" type="button" class="audioOn" onclick="toggleSound()">🔊 SFX ON</button>
+    <button id="musicToggleBtn" type="button" class="audioOn" onclick="toggleMusic()">🎵 MUSIC ON</button>
+    <label class="audioVolume" for="soundVolumeControl">SFX
+      <input id="soundVolumeControl" type="range" min="0" max="100" step="1" value="65" oninput="setSoundVolume(this.value)">
+      <output id="soundVolumeValue" for="soundVolumeControl">65%</output>
+    </label>
+    <label class="audioVolume" for="musicVolumeControl">MUSIC
+      <input id="musicVolumeControl" type="range" min="0" max="100" step="1" value="35" oninput="setMusicVolume(this.value)">
+      <output id="musicVolumeValue" for="musicVolumeControl">35%</output>
+    </label>
+  </div>
+
   <span id="versionHud" style="color:#7de7ff">🛡️ ULTRA PRODUCTION • MECH.02 SPECIAL</span>
 
   <button id="startWaveBtn" onclick="startWave()">🌊 START WAVE</button>
@@ -11145,6 +11165,347 @@ html.performanceSafeMode .mech02BarrageTrackBlast{box-shadow:none!important}
 </div>
 
 <script>
+
+/* ===== RESILIENT AUDIO SYSTEM =====
+   Audio files are optional so a static deployment can still play when an
+   asset is missing. A fixed pool of HTMLAudio elements is reused for effects;
+   Web Audio provides a tiny fallback tone and ambient loop when needed. */
+const AUDIO_SAVE_KEY='towerDefenseAudioSettingsV1';
+const AUDIO_FILES={
+  button:'assets/sounds/button.wav',
+  towerAttack:'assets/sounds/tower-attack.wav',
+  explosion:'assets/sounds/explosion.wav',
+  enemyDeath:'assets/sounds/enemy-death.wav',
+  waveStart:'assets/sounds/wave-start.wav',
+  bossWarning:'assets/sounds/boss-warning.wav',
+  victory:'assets/sounds/victory.wav',
+  defeat:'assets/sounds/defeat.wav',
+  battleMusic:'assets/sounds/battle-music.mp3'
+};
+const AUDIO_COOLDOWN={button:45,towerAttack:85,explosion:100,enemyDeath:45,waveStart:320,bossWarning:700,victory:500,defeat:500};
+const audioSettings={soundEnabled:true,musicEnabled:true,soundVolume:.65,musicVolume:.35};
+const audioPools=Object.create(null);
+const audioPoolCursor=Object.create(null);
+const audioFileState=Object.create(null);
+const audioFileProbePromises=Object.create(null);
+const audioLastPlayed=Object.create(null);
+const fallbackVoices=[];
+let audioContext=null;
+let audioUnlocked=false;
+let battleMusicAudio=null;
+let fallbackMusic=null;
+
+function clampAudioVolume(value,fallback){
+  const n=Number(value);
+  return Number.isFinite(n)?Math.max(0,Math.min(1,n)):fallback;
+}
+
+function loadAudioSettings(){
+  try{
+    const raw=localStorage.getItem(AUDIO_SAVE_KEY);
+    if(raw){
+      const saved=JSON.parse(raw);
+      if(saved && typeof saved==='object'){
+        audioSettings.soundEnabled=saved.soundEnabled!==false;
+        audioSettings.musicEnabled=saved.musicEnabled!==false;
+        audioSettings.soundVolume=clampAudioVolume(saved.soundVolume,.65);
+        audioSettings.musicVolume=clampAudioVolume(saved.musicVolume,.35);
+      }
+    }
+  }catch(err){
+    // Private browsing/storage-disabled browsers simply use safe defaults.
+  }
+}
+
+function saveAudioSettings(){
+  try{localStorage.setItem(AUDIO_SAVE_KEY,JSON.stringify(audioSettings));}catch(err){}
+}
+
+function refreshAudioControls(){
+  const sound=document.getElementById('soundToggleBtn');
+  const music=document.getElementById('musicToggleBtn');
+  const soundRange=document.getElementById('soundVolumeControl');
+  const musicRange=document.getElementById('musicVolumeControl');
+  const soundValue=document.getElementById('soundVolumeValue');
+  const musicValue=document.getElementById('musicVolumeValue');
+
+  if(sound){
+    sound.textContent=audioSettings.soundEnabled?'🔊 SFX ON':'🔇 SFX OFF';
+    sound.classList.toggle('audioOn',audioSettings.soundEnabled);
+    sound.classList.toggle('audioOff',!audioSettings.soundEnabled);
+    sound.setAttribute('aria-pressed',audioSettings.soundEnabled?'true':'false');
+  }
+  if(music){
+    music.textContent=audioSettings.musicEnabled?'🎵 MUSIC ON':'🎵 MUSIC OFF';
+    music.classList.toggle('audioOn',audioSettings.musicEnabled);
+    music.classList.toggle('audioOff',!audioSettings.musicEnabled);
+    music.setAttribute('aria-pressed',audioSettings.musicEnabled?'true':'false');
+  }
+  if(soundRange) soundRange.value=String(Math.round(audioSettings.soundVolume*100));
+  if(musicRange) musicRange.value=String(Math.round(audioSettings.musicVolume*100));
+  if(soundValue) soundValue.textContent=Math.round(audioSettings.soundVolume*100)+'%';
+  if(musicValue) musicValue.textContent=Math.round(audioSettings.musicVolume*100)+'%';
+
+  for(const pool of Object.values(audioPools)){
+    for(const audio of pool){audio.volume=audioSettings.soundVolume;}
+  }
+  if(battleMusicAudio) battleMusicAudio.volume=audioSettings.musicVolume;
+  if(fallbackMusic) fallbackMusic.gain.gain.value=audioSettings.musicVolume*.16;
+}
+
+function getAudioContext(){
+  if(audioContext) return audioContext;
+  const Ctx=window.AudioContext||window.webkitAudioContext;
+  if(!Ctx) return null;
+  try{audioContext=new Ctx();}catch(err){audioContext=null;}
+  return audioContext;
+}
+
+function unlockAudio(){
+  audioUnlocked=true;
+  const ctx=getAudioContext();
+  if(ctx && ctx.state==='suspended') ctx.resume().catch(()=>{});
+}
+
+function probeAudioFile(key){
+  if(audioFileState[key]==='available') return Promise.resolve(true);
+  if(audioFileState[key]==='missing') return Promise.resolve(false);
+  if(audioFileProbePromises[key]) return audioFileProbePromises[key];
+  if(location.protocol==='file:'){
+    audioFileState[key]='missing';
+    return Promise.resolve(false);
+  }
+  if(typeof fetch!=='function'){
+    audioFileState[key]='missing';
+    return Promise.resolve(false);
+  }
+
+  audioFileState[key]='probing';
+  audioFileProbePromises[key]=fetch(AUDIO_FILES[key],{method:'HEAD',cache:'no-store'})
+    .then(response=>{
+      if(!response.ok) throw new Error('Audio asset unavailable');
+      audioFileState[key]='available';
+      return true;
+    })
+    .catch(()=>{
+      // Optional assets may be absent (or blocked by file:// CORS). Keep the
+      // fallback active without surfacing a noisy browser resource error.
+      audioFileState[key]='missing';
+      return false;
+    });
+  return audioFileProbePromises[key];
+}
+
+function getAudioPool(key){
+  if(audioPools[key] || !AUDIO_FILES[key]) return audioPools[key]||[];
+  const count=key==='towerAttack'?5:(key==='enemyDeath'?4:3);
+  audioPools[key]=[];
+  audioPoolCursor[key]=0;
+  if(typeof Audio!=='function') return audioPools[key];
+
+  for(let i=0;i<count;i++){
+    const audio=new Audio();
+    audio.preload='none';
+    audio.src=AUDIO_FILES[key];
+    audio.addEventListener('error',()=>{audioFileState[key]='missing';},{passive:true});
+    audioPools[key].push(audio);
+  }
+  return audioPools[key];
+}
+
+function fallbackTone(key){
+  if(!audioUnlocked || !audioSettings.soundEnabled || audioSettings.soundVolume<=0) return;
+  if(fallbackVoices.length>=8) return;
+  const ctx=getAudioContext();
+  if(!ctx) return;
+
+  const presets={
+    button:{notes:[560],duration:.055,type:'square'},
+    towerAttack:{notes:[720],duration:.065,type:'triangle'},
+    explosion:{notes:[115,72],duration:.22,type:'sawtooth'},
+    enemyDeath:{notes:[210,125],duration:.11,type:'triangle'},
+    waveStart:{notes:[440,660,880],duration:.28,type:'triangle'},
+    bossWarning:{notes:[130,98,130],duration:.38,type:'square'},
+    victory:{notes:[523,659,784],duration:.48,type:'triangle'},
+    defeat:{notes:[330,220,110],duration:.5,type:'sawtooth'}
+  };
+  const p=presets[key]||presets.button;
+  const now=ctx.currentTime;
+  const gain=ctx.createGain();
+  gain.gain.setValueAtTime(Math.max(.0001,audioSettings.soundVolume*.12),now);
+  gain.gain.exponentialRampToValueAtTime(.0001,now+p.duration);
+  gain.connect(ctx.destination);
+  const voice={gain,oscillators:[]};
+  fallbackVoices.push(voice);
+
+  p.notes.forEach((note,index)=>{
+    const osc=ctx.createOscillator();
+    osc.type=p.type;
+    osc.frequency.setValueAtTime(note,now+index*p.duration/p.notes.length);
+    osc.connect(gain);
+    osc.start(now+index*p.duration/p.notes.length);
+    osc.stop(now+p.duration);
+    voice.oscillators.push(osc);
+  });
+  const cleanup=()=>{
+    const i=fallbackVoices.indexOf(voice);
+    if(i>=0) fallbackVoices.splice(i,1);
+    try{gain.disconnect();}catch(err){}
+  };
+  voice.oscillators[voice.oscillators.length-1]?.addEventListener('ended',cleanup,{once:true});
+}
+
+function playSfx(key,options={}){
+  if(!audioSettings.soundEnabled || audioSettings.soundVolume<=0) return;
+  if(!audioUnlocked) return;
+  const now=performance.now();
+  const cooldown=Number(AUDIO_COOLDOWN[key]||70);
+  if(!options.force && now-(audioLastPlayed[key]||0)<cooldown) return;
+  audioLastPlayed[key]=now;
+
+  if(audioFileState[key]==='available'){
+    const pool=getAudioPool(key);
+    if(pool.length){
+      const index=(audioPoolCursor[key]||0)%pool.length;
+      audioPoolCursor[key]=index+1;
+      const audio=pool[index];
+      audio.volume=audioSettings.soundVolume;
+      try{audio.currentTime=0;}catch(err){}
+      const promise=audio.play();
+      if(promise && typeof promise.catch==='function'){
+        promise.catch(()=>{
+          audioFileState[key]='missing';
+          fallbackTone(key);
+        });
+      }
+      return;
+    }
+  }
+  if(audioFileState[key]!=='missing') probeAudioFile(key);
+  fallbackTone(key);
+}
+
+function stopFallbackMusic(){
+  if(!fallbackMusic) return;
+  for(const node of fallbackMusic.nodes){try{node.stop();}catch(err){} try{node.disconnect();}catch(err){}}
+  try{fallbackMusic.gain.disconnect();}catch(err){}
+  fallbackMusic=null;
+}
+
+function startFallbackMusic(){
+  if(!audioUnlocked || !audioSettings.musicEnabled || fallbackMusic) return;
+  const ctx=getAudioContext();
+  if(!ctx) return;
+  const gain=ctx.createGain();
+  gain.gain.value=audioSettings.musicVolume*.16;
+  gain.connect(ctx.destination);
+  const nodes=[];
+  [110,164.81].forEach((frequency,index)=>{
+    const osc=ctx.createOscillator();
+    osc.type=index?'triangle':'sine';
+    osc.frequency.value=frequency;
+    osc.connect(gain);
+    osc.start();
+    nodes.push(osc);
+  });
+  const lfo=ctx.createOscillator();
+  const lfoGain=ctx.createGain();
+  lfo.frequency.value=.16;
+  lfoGain.gain.value=9;
+  lfo.connect(lfoGain);
+  lfoGain.connect(nodes[0].frequency);
+  lfo.start();
+  nodes.push(lfo,lfoGain);
+  fallbackMusic={gain,nodes};
+}
+
+function startBattleMusic(){
+  if(!audioUnlocked || !audioSettings.musicEnabled) return;
+  if(battleMusicAudio){
+    battleMusicAudio.volume=audioSettings.musicVolume;
+    battleMusicAudio.play().catch(()=>{audioFileState.battleMusic='missing';startFallbackMusic();});
+    return;
+  }
+  if(audioFileState.battleMusic==='missing'){
+    startFallbackMusic();
+    return;
+  }
+  if(audioFileState.battleMusic!=='available'){
+    startFallbackMusic();
+    probeAudioFile('battleMusic').then(available=>{
+      if(available && audioUnlocked && audioSettings.musicEnabled){
+        stopFallbackMusic();
+        startBattleMusic();
+      }
+    });
+    return;
+  }
+  if(typeof Audio==='function'){
+    const audio=new Audio(AUDIO_FILES.battleMusic);
+    audio.preload='none';
+    audio.loop=true;
+    audio.volume=audioSettings.musicVolume;
+    audio.addEventListener('error',()=>{audioFileState.battleMusic='missing';battleMusicAudio=null;startFallbackMusic();},{passive:true});
+    battleMusicAudio=audio;
+    audio.play().catch(()=>{audioFileState.battleMusic='missing';battleMusicAudio=null;startFallbackMusic();});
+  }else{
+    audioFileState.battleMusic='missing';
+    startFallbackMusic();
+  }
+}
+
+function stopBattleMusic(){
+  if(battleMusicAudio){
+    battleMusicAudio.pause();
+    try{battleMusicAudio.currentTime=0;}catch(err){}
+    battleMusicAudio=null;
+  }
+  stopFallbackMusic();
+}
+
+function toggleSound(){
+  unlockAudio();
+  audioSettings.soundEnabled=!audioSettings.soundEnabled;
+  saveAudioSettings();
+  refreshAudioControls();
+  if(audioSettings.soundEnabled) playSfx('button',{force:true});
+}
+
+function toggleMusic(){
+  unlockAudio();
+  audioSettings.musicEnabled=!audioSettings.musicEnabled;
+  saveAudioSettings();
+  refreshAudioControls();
+  if(audioSettings.musicEnabled){
+    const lobby=document.getElementById('lobby');
+    if(lobby && getComputedStyle(lobby).display==='none') startBattleMusic();
+  }else{
+    stopBattleMusic();
+  }
+  if(audioSettings.soundEnabled) playSfx('button',{force:true});
+}
+
+function setSoundVolume(value){
+  audioSettings.soundVolume=clampAudioVolume(Number(value)/100,.65);
+  saveAudioSettings();
+  refreshAudioControls();
+}
+
+function setMusicVolume(value){
+  audioSettings.musicVolume=clampAudioVolume(Number(value)/100,.35);
+  saveAudioSettings();
+  refreshAudioControls();
+}
+
+loadAudioSettings();
+refreshAudioControls();
+
+document.addEventListener('pointerdown',unlockAudio,{capture:true,passive:true});
+document.addEventListener('keydown',unlockAudio,{capture:true});
+document.addEventListener('click',event=>{
+  unlockAudio();
+  if(event.target.closest('button')) playSfx('button');
+},{capture:true});
 
 
 
@@ -12747,6 +13108,8 @@ function showWinScreen(){
   clearAutoSkipTimer();
   gameEnded=true;
   waveRunning=false;
+  playSfx('victory',{force:true});
+  stopBattleMusic();
 
   savedProgress.wins=(Number(savedProgress.wins)||0)+1;
   savedProgress.bestWave=Math.max(Number(savedProgress.bestWave)||0,Number(wave)||0);
@@ -12768,6 +13131,8 @@ function showLoseScreen(){
   clearAutoSkipTimer();
   gameEnded=true;
   waveRunning=false;
+  playSfx('defeat',{force:true});
+  stopBattleMusic();
 
   const s=document.getElementById('endScreen');
   const t=document.getElementById('endTitle');
@@ -12781,6 +13146,8 @@ function showLoseScreen(){
 
 function restartMatch(){
   clearAutoSkipTimer();
+  unlockAudio();
+  startBattleMusic();
   closeOwnerAbilities();
   const uiResetIds=['upgrade','merchantPanel','ownerUpgradeQuick','megaFusionPanel','simpleAscendPanel'];
   for(const id of uiResetIds){
@@ -12929,6 +13296,8 @@ function chooseMap(key){
 }
 
 function enterGame(){
+  unlockAudio();
+  startBattleMusic();
   closeOwnerAbilities();
   const uiResetIds=['upgrade','merchantPanel','ownerUpgradeQuick','megaFusionPanel','simpleAscendPanel'];
   for(const id of uiResetIds){
@@ -13125,6 +13494,7 @@ function clearTransientBattleEffects(){
 }
 
 function returnToLobby(){
+  stopBattleMusic();
   closeOwnerAbilities();
   const uiResetIds=['upgrade','merchantPanel','ownerUpgradeQuick','megaFusionPanel','simpleAscendPanel'];
   for(const id of uiResetIds){
@@ -15053,6 +15423,7 @@ function spawnEnemy(hp=100,speed=.75,boss=false,enemyType=null){
     wither:0
   });
   updateEnemyDefenseUi(enemies.get(id));
+  if(boss) playSfx('bossWarning');
   return enemies.get(id);
 }
 
@@ -15135,6 +15506,7 @@ function spawnOmegaBoss(kind){
     wither:0
   });
 
+  playSfx('bossWarning');
   msg(isYeti
     ? '❄️Ω OMEGA YETI entered the track!'
     : '🔥Ω OMEGA FIRE MONSTER entered the track!');
@@ -15393,6 +15765,7 @@ function startWave({advance=false}={}){
     },count*280);
   }
 
+  playSfx('waveStart');
   msg('🌊 Wave '+wave+' started!');
 }
 
@@ -15526,6 +15899,7 @@ function damage(e,a,options={}){
 
     if(e.el && e.el.isConnected) e.el.remove();
     enemies.delete(e.id);
+    playSfx('enemyDeath');
 
     if(wasBoss){
       savedProgress.bossesDefeated=(Number(savedProgress.bossesDefeated)||0)+1;
@@ -17088,6 +17462,7 @@ function updateMech02Burning(now){
 
 function spawnMech02Explosion(x,y,large=false){
   trimMech02Effects();
+  playSfx('explosion');
 
   const fx=document.createElement('div');
   fx.className='mech02Explosion'+(large?' mech02ExplosionLarge':'');
@@ -17253,6 +17628,7 @@ function shoot(u,e){
   if(!u || !e) return;
 
   const now=performance.now();
+  playSfx((u.type==='mech02' || u.type==='diamondblaster')?'explosion':'towerAttack');
 
   switch(u.type){
     case 'megaowner':
@@ -19993,6 +20369,7 @@ requestAnimationFrame(loop);return;}
 
     if(triggered){
       b.el.remove();
+      playSfx('explosion');
       const fx=document.createElement('div');
       fx.className='explosion';
       fx.style.left=b.x+'px';
@@ -20161,4 +20538,3 @@ requestAnimationFrame(loop)
 </script>
 </body>
 </html>
-
