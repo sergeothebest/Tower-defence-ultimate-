@@ -10352,6 +10352,20 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 #base.baseCritical::after{content:"";position:absolute;inset:7px;border:2px solid rgba(255,116,116,.8);clip-path:polygon(18% 0,25% 42%,7% 58%,36% 64%,47% 100%,54% 58%,91% 48%,73% 35%,82% 0,63% 27%,45% 12%,34% 31%);opacity:.8;pointer-events:none}.baseShield{animation:baseShieldPulse 2.6s ease-in-out infinite}@keyframes baseShieldPulse{50%{opacity:.72;transform:scale(1.04)}}
 html.performanceSafeMode .mapDeco,html.performanceSafeMode .damageNumber,html.performanceSafeMode #battleStatusBanner{display:none!important}
 
+/* Boss Lab controls keep their own hierarchy and never fall back to the
+   browser's default white button styling. */
+#bossLobbyPanel .bossChoiceRow{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;align-items:stretch}
+#bossLobbyPanel .bossChoice{display:flex!important;flex-direction:column;align-items:flex-start;justify-content:center;gap:4px;min-height:72px!important;padding:10px 12px!important;border:1px solid #46698e!important;border-radius:11px!important;background:linear-gradient(145deg,#173452,#0f2034)!important;color:#ecf6ff!important;text-align:left!important}
+#bossLobbyPanel .bossChoice b{display:block!important;color:#fff!important;font-size:12px!important;line-height:1.2}
+#bossLobbyPanel .bossChoice span{display:block!important;color:#a9c2d9!important;font-size:9px!important;line-height:1.25}
+#bossLobbyPanel .bossChoice.active{border-color:#80d8ff!important;background:linear-gradient(145deg,#225a83,#163452)!important;box-shadow:0 0 14px rgba(73,194,255,.22)!important}
+#bossLobbyPanel .bossModifierGrid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:9px 0}
+#bossLobbyPanel .bossModifier{min-height:38px!important;padding:8px!important;border:1px solid #3d5b79!important;border-radius:9px!important;background:#11263d!important;color:#cce1f4!important;font-size:9px!important}
+#bossLobbyPanel .bossModifier.active{border-color:#ffb76b!important;background:#4a2c22!important;color:#fff!important}
+#bossChallengeToggle{min-height:38px!important;border:1px solid #5a7191!important;border-radius:9px!important;background:#172b44!important;color:#d9ebff!important;font-size:10px!important}
+#bossChallengeToggle.active{border-color:#6fe6b3!important;background:#164c3d!important;color:#eafff4!important}
+#bossLobbySummary{margin-top:9px;padding:8px 10px;border:1px solid #304e6d;border-radius:8px;background:#091725;color:#b9d1e7;font-size:10px;text-align:center}
+
 @media (max-width:1100px){#hud{grid-template-columns:1fr 1fr}.hudZoneLeft{grid-column:1}.hudZoneCenter{grid-column:2}.hudZoneRight{grid-column:1 / -1;justify-content:center}.modeGroupGrid{grid-template-columns:repeat(3,minmax(0,1fr))}#lobbyUnits{grid-template-columns:repeat(4,minmax(0,1fr))!important}#unitIndexLayout{grid-template-columns:1fr!important}#unitIndexDetail{position:relative;top:auto;min-height:0}}
 @media (pointer:coarse),(max-width:760px){#lobbyNav{top:4px}.lobbyNavTab{font-size:9px;letter-spacing:.5px}.modeGroupGrid{grid-template-columns:repeat(2,minmax(0,1fr))}#mapPicker{grid-template-columns:repeat(2,minmax(0,1fr))!important}#quickUnitHotbar{width:100%;border-radius:12px 12px 0 0;margin-bottom:0}#quickUnitHotbarSlots{grid-template-columns:repeat(4,minmax(0,1fr))}.quickSlot:nth-child(n+5){display:none}#allUnitsBtn{font-size:9px;padding:0 8px}#passSummary{grid-template-columns:1fr 1fr}.uiDrawer{right:8px;top:64px;width:calc(100vw - 16px)}}
 </style>
