@@ -10248,6 +10248,112 @@ html.performanceSafeMode .mech02BarrageTrackBlast{box-shadow:none!important}
 .audioVolume input{width:68px;accent-color:#67ddff;cursor:pointer}
 .audioVolume output{min-width:27px;color:#fff;font-variant-numeric:tabular-nums}
 
+/* ===== ULTRA UI POLISH / DESKTOP + IPAD COMMAND DECK ===== */
+:root{
+  --ui-bg:#07111f;
+  --ui-panel:#0e1d31;
+  --ui-panel-2:#132944;
+  --ui-line:#315174;
+  --ui-line-bright:#64c6ff;
+  --ui-text:#edf6ff;
+  --ui-muted:#9cb4ce;
+  --ui-accent:#50c8ff;
+  --ui-accent-2:#9278ff;
+}
+html,body{background:var(--ui-bg);color:var(--ui-text)}
+body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:.01em}
+button,input,select{font:inherit}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #ffe27a;outline-offset:2px}
+
+/* Lobby navigation and screen routing. The original sections remain intact and
+   are only visibility-routed so saves and handlers keep using their IDs. */
+#lobbyCard{position:relative}
+#lobby[style*="display: none"]{display:none!important}
+#selectedUnitRolePanel:not(.show){display:none!important}
+#lobbyNav{position:sticky;top:8px;z-index:20;display:flex;gap:6px;align-items:center;margin:0 0 16px;padding:7px;border:1px solid #355878;border-radius:14px;background:rgba(7,17,31,.94);box-shadow:0 10px 28px rgba(0,0,0,.25);backdrop-filter:blur(12px)}
+.lobbyNavTab{flex:1;min-height:42px;border:1px solid transparent;border-radius:10px;background:transparent;color:#9fb7d1;font-size:11px;font-weight:1000;letter-spacing:1px;cursor:pointer;transition:.18s ease}
+.lobbyNavTab:hover{background:#152c46;color:#fff}
+.lobbyNavTab.active{background:linear-gradient(135deg,#216293,#183e69);border-color:#69caff;color:#fff;box-shadow:0 0 18px rgba(76,188,255,.2)}
+#lobby[data-screen="play"] #unitIndexSection,#lobby[data-screen="play"] #passCenterSection,#lobby[data-screen="play"] #bossChallengeSection,#lobby[data-screen="settings"] #modeSelectSection,#lobby[data-screen="settings"] #mapSelectSection,#lobby[data-screen="settings"] #unitIndexSection,#lobby[data-screen="settings"] #passCenterSection,#lobby[data-screen="settings"] #bossChallengeSection,#lobby[data-screen="units"] #modeSelectSection,#lobby[data-screen="units"] #mapSelectSection,#lobby[data-screen="units"] #passCenterSection,#lobby[data-screen="units"] #bossChallengeSection,#lobby[data-screen="boss"] #modeSelectSection,#lobby[data-screen="boss"] #mapSelectSection,#lobby[data-screen="boss"] #unitIndexSection,#lobby[data-screen="boss"] #passCenterSection,#lobby[data-screen="pass"] #modeSelectSection,#lobby[data-screen="pass"] #mapSelectSection,#lobby[data-screen="pass"] #unitIndexSection,#lobby[data-screen="pass"] #bossChallengeSection{display:none!important}
+#lobby[data-screen="units"] #lobbyReadyPanel,#lobby[data-screen="units"] #progressCard,#lobby[data-screen="pass"] #lobbyReadyPanel,#lobby[data-screen="pass"] #progressCard,#lobby[data-screen="boss"] #lobbyReadyPanel,#lobby[data-screen="boss"] #progressCard,#lobby[data-screen="settings"] #lobbyReadyPanel{display:none!important}
+#lobby[data-screen="play"] #playLoadoutPreview{display:flex}
+#playLoadoutPreview{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:16px;padding-top:12px;border-top:1px solid rgba(122,174,219,.2)}#playLoadoutPreview>span{width:100%;color:#9fc2df;font-size:9px;font-weight:1000;letter-spacing:1px}.lobbyLoadoutSlot{min-width:62px;min-height:40px;padding:4px 6px;border:1px solid #365676;border-radius:8px;background:#0d2035;color:#e6f4ff;font-size:17px;cursor:pointer}.lobbyLoadoutSlot small{display:block;color:#9cb6cf;font-size:7px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.lobbyLoadoutSlot.active{border-color:#ffe27a;box-shadow:0 0 12px rgba(255,226,122,.2)}
+
+/* Compact modes: Standard is visible first; More Modes reveals every existing
+   challenge/ultra card without deleting or renaming any mode. */
+.lobbyModes{display:block!important}
+.modeGroup{margin:0 0 13px;padding:11px;border:1px solid #294663;border-radius:14px;background:rgba(8,20,34,.55)}
+.modeGroup:last-child{margin-bottom:0}
+.modeGroupTitle{margin:0 0 8px;color:#75caff;font-size:10px;font-weight:1000;letter-spacing:1.4px}
+.modeGroupGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+#modeSelectSection:not(.showMoreModes) .modeGroup:not([data-group="standard"]){display:none}
+#moreModesBtn{display:block;width:100%;margin-top:10px;min-height:40px;border:1px solid #52779b;border-radius:10px;background:#122a43;color:#cce7ff;font-size:10px;font-weight:1000;letter-spacing:.8px;cursor:pointer}
+#moreModesBtn:hover{background:#1b3b5d;border-color:#70c6ff}
+
+/* Map cards read as selectable previews rather than plain buttons. */
+#mapPicker{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px!important}
+.mapChoice{position:relative;display:flex!important;flex-direction:column;align-items:flex-start;justify-content:flex-end;min-height:126px!important;padding:12px!important;overflow:hidden;border:2px solid #3b5878!important;border-radius:15px!important;background:#122238!important;text-align:left!important;cursor:pointer}
+.mapChoice::before{content:"";position:absolute;inset:0 0 42px;background:radial-gradient(circle at 25% 35%,rgba(255,255,255,.2),transparent 30%),linear-gradient(135deg,#2d7f55,#163b3a);opacity:.8;z-index:0}
+.mapChoice[data-map="crystal"]::before{background:radial-gradient(circle at 70% 30%,#d995ff,transparent 18%),linear-gradient(135deg,#225c88,#352255)}
+.mapChoice[data-map="volcanic"]::before{background:radial-gradient(circle at 75% 28%,#ffb14f,transparent 20%),linear-gradient(135deg,#6e342f,#231521)}
+.mapChoice[data-map="frozen"]::before{background:radial-gradient(circle at 28% 28%,#dcffff,transparent 18%),linear-gradient(135deg,#3c89ae,#172d51)}
+.mapChoice>*{position:relative;z-index:1}
+.mapChoice b{font-size:13px;color:#fff}.mapChoice span{margin-top:4px;color:#b6cbe1;font-size:10px}
+.mapChoice.active{border-color:#71d2ff!important;box-shadow:0 0 0 1px rgba(155,229,255,.2) inset,0 0 20px rgba(65,175,255,.25)!important}
+
+/* Role guide is a real accessible popup toggle on the Unit screen. */
+#roleGuideBtn{min-height:36px;padding:7px 11px;border:1px solid #4f7094;border-radius:9px;background:#132a43;color:#cce6ff;font-size:10px;font-weight:1000;cursor:pointer}
+#unitRoleGuide{display:none!important;margin-top:9px!important}
+#unitRoleGuide.roleGuideOpen{display:block!important}
+.unitIndexHeader{align-items:center}
+#unitIndexLayout{grid-template-columns:minmax(0,1fr) 300px!important}
+#lobbyUnits{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:11px!important;max-height:590px;overflow:auto;padding:2px 4px 4px 2px;scrollbar-color:#37658e #0a1522}
+.lobbyUnit{min-height:174px!important}
+
+/* Pass center summary + expandable track. */
+#passSummary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 0 12px}
+.passSummaryCard{padding:11px;border:1px solid #355677;border-radius:11px;background:#0a192a}.passSummaryCard span{display:block;color:#8ea9c5;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.8px}.passSummaryCard b{display:block;margin-top:5px;color:#fff;font-size:15px}.passSummaryCard small{display:block;margin-top:3px;color:#a9c1d8;font-size:9px}
+#passFullTrackToggle{width:100%;min-height:38px;margin:11px 0;border:1px solid #4d7296;border-radius:10px;background:#122a43;color:#cce8ff;font-size:10px;font-weight:1000;cursor:pointer}
+.passTrack:not(.fullTrack) .passReward:nth-child(n+6){display:none}
+.passTrack{max-height:360px;overflow:auto;scrollbar-color:#416e97 #0a1522}
+
+/* Settings and automation are drawers shared by lobby and battle. */
+.uiDrawer{position:fixed;right:18px;top:84px;z-index:6200;width:min(360px,calc(100vw - 36px));display:none;padding:16px;border:2px solid #3e6389;border-radius:16px;background:linear-gradient(145deg,#142a45,#0a1727);box-shadow:0 18px 50px rgba(0,0,0,.5)}
+.uiDrawer.open{display:block}.uiDrawer h3{margin:0 0 5px;color:#fff;font-size:15px}.uiDrawer p{margin:0 0 12px;color:#a6bdd4;font-size:10px}.uiDrawerClose{float:right;min-width:32px;min-height:30px;border:1px solid #4a6a8e;border-radius:8px;background:#172f4a;color:#fff;cursor:pointer}
+.uiDrawer .audioSettings{display:grid!important;grid-template-columns:1fr 1fr;gap:8px;margin:0!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important}
+.uiDrawer .audioVolume{display:flex;flex-direction:column;gap:4px;padding:8px;border:1px solid #2e4c6b;border-radius:9px;background:#0b1b2d;color:#a9c4dd;font-size:9px;font-weight:900}.uiDrawer .audioVolume input{width:100%}.uiDrawer .audioOn{min-height:36px!important}
+#automationPanel{display:grid;gap:8px}.automationHint{padding:9px;border:1px solid #2e4c6b;border-radius:9px;background:#0b1b2d;color:#a9c4dd;font-size:10px;line-height:1.35}
+
+/* Battle HUD zones and command controls. */
+#hud{display:grid!important;grid-template-columns:minmax(210px,1fr) minmax(240px,1.1fr) minmax(280px,1.25fr);gap:8px!important;align-items:stretch!important;padding:9px 12px!important;background:linear-gradient(180deg,#0d1c2e,#091522)!important;border-bottom:1px solid #315174!important}
+.hudZone{display:flex;align-items:center;gap:7px;flex-wrap:wrap;min-width:0}.hudZoneLeft{grid-column:1}.hudZoneCenter{grid-column:2;justify-content:center}.hudZoneRight{grid-column:3;justify-content:flex-end}
+#hud .hudStatusCard{flex:1;min-width:118px;margin:0!important;padding:8px 10px!important;border-radius:11px!important;background:#10243a!important;border-color:#345779!important}.hudMiniCard{min-width:76px!important;padding:8px 9px!important;border-radius:10px!important;background:#10243a!important;border-color:#345779!important}
+#versionHud{display:none!important}
+#hud button{min-height:36px!important;border-radius:9px!important;font-size:10px!important}
+#battleSettingsBtn,#automationBtn{border-color:#5e7bb1!important;background:#1b2f54!important;color:#e7edff!important}
+#adminToggleBtn{border-color:#a07359!important;background:#3a261f!important;color:#ffd8ba!important}
+#autoUpgradeBtn,#autoAwakenBtn{display:none!important}
+#automationDrawer #autoUpgradeBtn,#automationDrawer #autoAwakenBtn{display:block!important;width:100%}
+#bossHealthHud{position:fixed!important;left:14px;top:126px;z-index:5000;width:min(330px,calc(100vw - 28px));margin:0!important;pointer-events:none}
+
+/* Quick slots keep placement one click away; the full 33-unit picker remains
+   available as an overlay via ALL UNITS. */
+#quickUnitHotbar{position:sticky;bottom:0;z-index:4800;display:flex;align-items:center;gap:8px;width:min(1000px,96vw);margin:8px auto 0;padding:8px;border:1px solid #355a7e;border-radius:14px;background:rgba(7,17,30,.95);box-shadow:0 -10px 28px rgba(0,0,0,.24);backdrop-filter:blur(10px)}
+#quickUnitHotbarSlots{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:6px;flex:1;min-width:0}.quickSlot{min-height:52px;padding:5px 3px;border:1px solid #385675;border-radius:9px;background:#10243a;color:#dceeff;font-size:18px;line-height:1;cursor:pointer}.quickSlot small{display:block;margin-top:4px;color:#9eb8d1;font-size:7px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.quickSlot:hover{border-color:#70caff}.quickSlot.active{border-color:#ffe27a;background:#254466;box-shadow:0 0 14px rgba(255,224,122,.24)}
+#allUnitsBtn{min-height:52px;padding:0 13px;border:1px solid #6e81c5;border-radius:10px;background:linear-gradient(135deg,#283f75,#35245b);color:#fff;font-size:10px;font-weight:1000;white-space:nowrap;cursor:pointer}
+#gameUnitPicker{display:none!important}
+#gameUnitPicker.pickerOverlayOpen{display:block!important;position:fixed!important;left:50%;top:70px;transform:translateX(-50%);z-index:6100;width:min(980px,calc(100vw - 30px));max-height:calc(100vh - 100px);overflow:auto;margin:0!important;border-color:#4e79a1!important;box-shadow:0 24px 70px rgba(0,0,0,.6)!important}
+#gameUnitPickerClose{min-height:34px;padding:6px 10px;border:1px solid #567798;border-radius:9px;background:#17314e;color:#fff;font-size:9px;font-weight:1000;cursor:pointer}
+#game{isolation:isolate}
+#placementCursor{position:absolute;width:92px;height:92px;transform:translate(-50%,-50%);border:2px dashed rgba(146,224,255,.95);border-radius:50%;background:radial-gradient(circle,rgba(80,199,255,.12),transparent 68%);pointer-events:none;z-index:35;display:none}.placementCursorShow #placementCursor{display:block}
+#battleStatusBanner{position:absolute;left:50%;top:18px;transform:translateX(-50%) translateY(-12px);z-index:80;min-width:260px;padding:10px 18px;border:2px solid #75d7ff;border-radius:12px;background:rgba(8,20,35,.9);box-shadow:0 0 28px rgba(70,190,255,.35);color:#fff;text-align:center;font-size:14px;font-weight:1000;letter-spacing:1px;opacity:0;pointer-events:none;transition:.22s ease}.battleBannerShow{opacity:1!important;transform:translateX(-50%) translateY(0)!important}.battleStatusBannerBoss{border-color:#ff8a75!important;box-shadow:0 0 30px rgba(255,92,69,.4)!important}.battleStatusBannerWave{border-color:#77d5ff!important}
+.damageNumber{position:absolute;z-index:75;pointer-events:none;color:#fff7ad;font-size:12px;font-weight:1000;text-shadow:0 2px 6px #06101e;animation:damageFloat .5s ease-out forwards}.damageNumber.critical{color:#ff9a7c;font-size:15px}@keyframes damageFloat{from{opacity:1;transform:translate(-50%,0) scale(1)}to{opacity:0;transform:translate(-50%,-28px) scale(1.08)}}
+.mapDeco{position:absolute;z-index:2;pointer-events:none;opacity:.7;font-size:28px;filter:drop-shadow(0 3px 3px rgba(0,0,0,.35))}.mapDeco.d1{left:7%;top:13%}.mapDeco.d2{left:26%;top:70%}.mapDeco.d3{left:61%;top:15%}.mapDeco.d4{left:78%;top:68%}.mapGrasslands .mapDeco{display:block}.mapCrystal .mapDeco{filter:hue-rotate(60deg) saturate(1.4);opacity:.75}.mapVolcanic .mapDeco{filter:hue-rotate(300deg) saturate(1.5);opacity:.72}.mapFrozen .mapDeco{filter:hue-rotate(145deg) saturate(1.2);opacity:.8}
+#base.baseCritical::after{content:"";position:absolute;inset:7px;border:2px solid rgba(255,116,116,.8);clip-path:polygon(18% 0,25% 42%,7% 58%,36% 64%,47% 100%,54% 58%,91% 48%,73% 35%,82% 0,63% 27%,45% 12%,34% 31%);opacity:.8;pointer-events:none}.baseShield{animation:baseShieldPulse 2.6s ease-in-out infinite}@keyframes baseShieldPulse{50%{opacity:.72;transform:scale(1.04)}}
+html.performanceSafeMode .mapDeco,html.performanceSafeMode .damageNumber,html.performanceSafeMode #battleStatusBanner{display:none!important}
+
+@media (max-width:1100px){#hud{grid-template-columns:1fr 1fr}.hudZoneLeft{grid-column:1}.hudZoneCenter{grid-column:2}.hudZoneRight{grid-column:1 / -1;justify-content:center}.modeGroupGrid{grid-template-columns:repeat(3,minmax(0,1fr))}#lobbyUnits{grid-template-columns:repeat(4,minmax(0,1fr))!important}#unitIndexLayout{grid-template-columns:1fr!important}#unitIndexDetail{position:relative;top:auto;min-height:0}}
+@media (pointer:coarse),(max-width:760px){#lobbyNav{top:4px}.lobbyNavTab{font-size:9px;letter-spacing:.5px}.modeGroupGrid{grid-template-columns:repeat(2,minmax(0,1fr))}#mapPicker{grid-template-columns:repeat(2,minmax(0,1fr))!important}#quickUnitHotbar{width:100%;border-radius:12px 12px 0 0;margin-bottom:0}#quickUnitHotbarSlots{grid-template-columns:repeat(4,minmax(0,1fr))}.quickSlot:nth-child(n+5){display:none}#allUnitsBtn{font-size:9px;padding:0 8px}#passSummary{grid-template-columns:1fr 1fr}.uiDrawer{right:8px;top:64px;width:calc(100vw - 16px)}}
 </style>
 </head>
 <body>
@@ -12833,6 +12939,7 @@ function renderPassCenter(){
   });
 
   updateMerchantPanelPassStats();
+  if(typeof renderPassSummary==='function') renderPassSummary();
 }
 
 function claimPassReward(kind,tier){
@@ -13312,6 +13419,7 @@ function enterGame(){
   megaFusionDone=false;
   document.getElementById('lobby').style.display='none';
   document.getElementById('returnLobbyBtn').style.display='block';
+  window.scrollTo({top:0,behavior:'auto'});
   applySelectedMap();
 
   // Fresh match state every time a mode is entered.
@@ -13452,6 +13560,14 @@ function enterGame(){
 
 
 function clearTransientBattleEffects(){
+  if(typeof battleBannerTimer!=='undefined' && battleBannerTimer){
+    clearTimeout(battleBannerTimer);
+    battleBannerTimer=null;
+  }
+  const banner=document.getElementById('battleStatusBanner');
+  if(banner) banner.classList.remove('battleBannerShow');
+  document.querySelectorAll('.damageNumber').forEach(el=>el.remove());
+  hidePlacementCursor();
   document.querySelectorAll(
     '.shot,.exoticBeam,.shadowExplosion,.macerShock,.macerAbilityPulse,.megaFusionFx,.omegaMegaFusionFx,.omegaMegaAttackFx,.megaUpgradeAttackFx,.omegaMegaAbilityFx,.superOmegaAttackFx,.superOmegaAbilityFx,.ascButterAbilityFx,.ascShadowAbilityFx,.ascMacerAbilityFx,.ownerBlackHole,.shadowBlackHole,.fusedButterNuke,.fusedButterNukeExplosion,.fusedMegaBlackHole,.fusedThorHammer,.fusedThorImpact,.fusedIceSpikeWave,.heroVoice,.abilityVfx,.ascendedOwnerFx'
   ).forEach(el=>el.remove());
@@ -14041,14 +14157,19 @@ function toggleAdmin(){
 function pickUnit(b){
   if(!b || !b.dataset || !b.dataset.unit) return;
 
-  document.querySelectorAll('.slot').forEach(x=>x.classList.remove('active'));
-  b.classList.add('active');
-  selected=b.dataset.unit;
+  setSelectedUnitType(b.dataset.unit,b);
+}
 
+function setSelectedUnitType(type,source){
+  if(!type || !stats[type] && !UNIT_ICON_INFO[type]) return;
+  document.querySelectorAll('.slot,#quickUnitHotbar .quickSlot,#playLoadoutPreview .lobbyLoadoutSlot').forEach(x=>x.classList.remove('active'));
+  if(source && source.classList) source.classList.add('active');
+  selected=type;
   const adminUnit=document.getElementById('adminUnit');
   if(adminUnit) adminUnit.value=selected;
-
   refreshGameUnitPickerSelected();
+  refreshQuickUnitHotbar();
+  showPlacementCursor();
   msg('Selected '+upgradeDisplayName(selected).toUpperCase());
 }
 function adminSwitch(){
@@ -15423,7 +15544,10 @@ function spawnEnemy(hp=100,speed=.75,boss=false,enemyType=null){
     wither:0
   });
   updateEnemyDefenseUi(enemies.get(id));
-  if(boss) playSfx('bossWarning');
+  if(boss){
+    playSfx('bossWarning');
+    if(typeof showBattleBanner==='function') showBattleBanner('⚠️ BOSS INBOUND • '+cfg.label,'boss',2400);
+  }
   return enemies.get(id);
 }
 
@@ -15507,6 +15631,7 @@ function spawnOmegaBoss(kind){
   });
 
   playSfx('bossWarning');
+  if(typeof showBattleBanner==='function') showBattleBanner('⚠️ '+(isYeti?'Ω OMEGA YETI':'Ω OMEGA FIRE MONSTER'),'boss',2800);
   msg(isYeti
     ? '❄️Ω OMEGA YETI entered the track!'
     : '🔥Ω OMEGA FIRE MONSTER entered the track!');
@@ -15766,6 +15891,7 @@ function startWave({advance=false}={}){
   }
 
   playSfx('waveStart');
+  if(typeof showBattleBanner==='function') showBattleBanner('🌊 WAVE '+wave+' INCOMING','wave',1500);
   msg('🌊 Wave '+wave+' started!');
 }
 
@@ -15888,6 +16014,7 @@ function damage(e,a,options={}){
   e.lastDamage=performance.now();
   if(amount<=0) return;
   e.hp-=amount;
+  if(typeof spawnDamageNumber==='function') spawnDamageNumber(e,amount,!!(options.critical || amount>=Math.max(1,e.max*.08)));
 
   if(e.bar){
     e.bar.style.width=Math.max(0,e.hp/e.max*100)+'%';
@@ -20447,6 +20574,194 @@ requestAnimationFrame(loop);return;}
  
 requestAnimationFrame(loop)
 }
+/* ===== UI POLISH BEHAVIOUR ===== */
+let lobbyScreen='play';
+let quickSlotTypes=['archer','cannon','laser','ice','mech02','diamondblaster','flowery','merchant'];
+let battleBannerTimer=null;
+
+function setLobbyScreen(screen,btn){
+  const allowed=['play','units','pass','boss','settings'];
+  lobbyScreen=allowed.includes(screen)?screen:'play';
+  const lobby=document.getElementById('lobby');
+  if(lobby) lobby.dataset.screen=lobbyScreen;
+  document.querySelectorAll('.lobbyNavTab').forEach(tab=>{
+    const active=tab.dataset.screen===lobbyScreen;
+    tab.classList.toggle('active',active);
+    tab.setAttribute('aria-selected',active?'true':'false');
+  });
+  if(lobbyScreen==='units'){
+    const first=document.querySelector('#lobbyUnits .lobbyUnit:not([style*="display: none"])');
+    if(first && !document.querySelector('#lobbyUnits .indexSelected')) selectUnitIndexCard(first);
+  }
+  const settings=document.getElementById('settingsDrawer');
+  const automation=document.getElementById('automationDrawer');
+  if(settings) settings.classList.toggle('open',lobbyScreen==='settings');
+  if(automation) automation.classList.remove('open');
+  if(lobbyScreen!=='settings' && settings) settings.classList.remove('lobbySettingsMode');
+  if(lobby) lobby.scrollTop=0;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function closeUiDrawer(id){
+  const el=document.getElementById(id);
+  if(el) el.classList.remove('open');
+  if(id==='settingsDrawer' && lobbyScreen==='settings') setLobbyScreen('play');
+}
+function toggleBattleSettings(){
+  const el=document.getElementById('settingsDrawer');
+  if(el) el.classList.toggle('open');
+}
+function toggleAutomationPanel(){
+  const el=document.getElementById('automationDrawer');
+  if(el) el.classList.toggle('open');
+  const settings=document.getElementById('settingsDrawer');
+  if(settings) settings.classList.remove('open');
+}
+function toggleMoreModes(){
+  const section=document.getElementById('modeSelectSection');
+  const btn=document.getElementById('moreModesBtn');
+  if(!section) return;
+  const open=section.classList.toggle('showMoreModes');
+  if(btn){btn.textContent=open?'SHOW FEWER MODES':'MORE MODES • CHALLENGE + EXTREME';btn.setAttribute('aria-expanded',open?'true':'false');}
+}
+function toggleRoleGuide(){
+  const guide=document.getElementById('unitRoleGuide');
+  const btn=document.getElementById('roleGuideBtn');
+  const open=!!(guide && guide.classList.toggle('roleGuideOpen'));
+  if(btn){btn.textContent=open?'HIDE ROLE GUIDE':'ROLE GUIDE';btn.setAttribute('aria-expanded',open?'true':'false');}
+}
+function togglePassFullTrack(){
+  const tracks=document.querySelectorAll('.passTrack');
+  const open=[...tracks].some(t=>!t.classList.contains('fullTrack'));
+  tracks.forEach(t=>t.classList.toggle('fullTrack',open));
+  const btn=document.getElementById('passFullTrackToggle');
+  if(btn){btn.textContent=open?'COLLAPSE TRACK':'VIEW FULL REWARD TRACK';btn.setAttribute('aria-expanded',open?'true':'false');}
+}
+function renderPassSummary(){
+  const box=document.getElementById('passSummary');
+  if(!box) return;
+  const mx=getPassLevel('merchant'), ux=getPassLevel('unit');
+  const next=(kind)=>{
+    const xp=getPassXp(kind); const tier=getPassConfig(kind).find(r=>r.xp>xp);
+    return tier ? tier.title+' • '+tier.xp+' XP' : 'All milestones complete';
+  };
+  box.innerHTML='<div class="passSummaryCard"><span>Merchant Pass</span><b>'+mx+' / '+PASS_MAX_LEVEL+'</b><small>Next: '+next('merchant')+'</small></div>'+
+    '<div class="passSummaryCard"><span>Unit Pass</span><b>'+ux+' / '+PASS_MAX_LEVEL+'</b><small>Next: '+next('unit')+'</small></div>'+
+    '<div class="passSummaryCard"><span>Milestones</span><b>'+passReadyCount('merchant')+' + '+passReadyCount('unit')+' ready</b><small>Fixed rewards • no gambling</small></div>';
+}
+
+function refreshQuickUnitHotbar(){
+  document.querySelectorAll('#quickUnitHotbar .quickSlot').forEach(btn=>btn.classList.toggle('active',btn.dataset.unit===selected));
+  const preview=document.getElementById('playLoadoutPreview');
+  if(preview) preview.querySelectorAll('.quickSlot').forEach(btn=>btn.classList.toggle('active',btn.dataset.unit===selected));
+}
+function selectQuickUnit(type,btn){
+  setSelectedUnitType(type,btn);
+}
+function renderQuickUnitHotbar(){
+  const gameEl=document.getElementById('game');
+  if(!gameEl || document.getElementById('quickUnitHotbar')) return;
+  const bar=document.createElement('div'); bar.id='quickUnitHotbar';
+  bar.setAttribute('aria-label','Quick unit hotbar');
+  const slots=document.createElement('div'); slots.id='quickUnitHotbarSlots';
+  quickSlotTypes.forEach(type=>{
+    const info=unitIconInfo(type); const btn=document.createElement('button');
+    btn.type='button'; btn.className='quickSlot'; btn.dataset.unit=type;
+    btn.innerHTML=info.icon+'<small>'+upgradeDisplayName(type)+'</small>';
+    btn.title='Select '+upgradeDisplayName(type)+' for placement';
+    btn.onclick=()=>selectQuickUnit(type,btn);
+    slots.appendChild(btn);
+  });
+  const all=document.createElement('button'); all.type='button'; all.id='allUnitsBtn'; all.textContent='ALL UNITS';
+  all.onclick=()=>toggleFullUnitPicker(true);
+  bar.append(slots,all); gameEl.insertAdjacentElement('afterend',bar);
+  refreshQuickUnitHotbar();
+}
+function toggleFullUnitPicker(force){
+  const picker=document.getElementById('gameUnitPicker');
+  if(!picker) return;
+  const open=typeof force==='boolean'?force:!picker.classList.contains('pickerOverlayOpen');
+  picker.classList.toggle('pickerOverlayOpen',open);
+  if(open){
+    toggleGameUnitPicker(true);
+    const search=document.getElementById('gameUnitPickerSearch');
+    if(search) setTimeout(()=>search.focus(),30);
+  }
+  if(!open) toggleGameUnitPicker(false);
+}
+
+function showPlacementCursor(){
+  const gameEl=document.getElementById('game'); if(!gameEl) return;
+  let c=document.getElementById('placementCursor');
+  if(!c){c=document.createElement('div');c.id='placementCursor';gameEl.appendChild(c)}
+  gameEl.classList.add('placementCursorShow');
+}
+function hidePlacementCursor(){
+  const gameEl=document.getElementById('game'); if(gameEl) gameEl.classList.remove('placementCursorShow');
+}
+function showBattleBanner(text,kind='wave',duration=1800){
+  const gameEl=document.getElementById('game'); if(!gameEl) return;
+  let banner=document.getElementById('battleStatusBanner');
+  if(!banner){banner=document.createElement('div');banner.id='battleStatusBanner';gameEl.appendChild(banner)}
+  banner.textContent=text; banner.className='battleStatusBannerShow '+(kind==='boss'?'battleStatusBannerBoss':'battleStatusBannerWave');
+  if(battleBannerTimer) clearTimeout(battleBannerTimer);
+  battleBannerTimer=setTimeout(()=>{banner.classList.remove('battleStatusBannerShow')},duration);
+}
+function spawnDamageNumber(e,amount,critical=false){
+  if(!e || !e.el || !e.el.isConnected || document.documentElement.classList.contains('performanceSafeMode')) return;
+  const gameEl=document.getElementById('game'); if(!gameEl) return;
+  const nodes=gameEl.querySelectorAll('.damageNumber');
+  if(nodes.length>=24) nodes[0].remove();
+  const n=document.createElement('div'); n.className='damageNumber'+(critical?' critical':'');
+  n.textContent=(critical?'✦ ':'')+Math.max(1,Math.round(amount)).toLocaleString();
+  n.style.left=((e.x||0)+23)+'px'; n.style.top='292px'; gameEl.appendChild(n);
+  setTimeout(()=>{if(n.isConnected)n.remove()},560);
+}
+function decorateBattlefield(){
+  const gameEl=document.getElementById('game'); if(!gameEl || gameEl.querySelector('.mapDeco')) return;
+  ['🌿','🪨','✦','🌾'].forEach((icon,i)=>{const d=document.createElement('div');d.className='mapDeco d'+(i+1);d.textContent=icon;d.setAttribute('aria-hidden','true');gameEl.appendChild(d)});
+  const c=document.createElement('div');c.id='placementCursor';gameEl.appendChild(c);
+  const banner=document.createElement('div');banner.id='battleStatusBanner';gameEl.appendChild(banner);
+  gameEl.addEventListener('mousemove',ev=>{
+    const r=gameEl.getBoundingClientRect(), cursor=document.getElementById('placementCursor');
+    if(cursor){cursor.style.left=Math.max(48,Math.min(gameEl.clientWidth-48,ev.clientX-r.left))+'px';cursor.style.top=Math.max(48,Math.min(gameEl.clientHeight-48,ev.clientY-r.top))+'px';}
+  },{passive:true});
+  gameEl.addEventListener('mouseleave',hidePlacementCursor,{passive:true});
+}
+function organizeLobbyModes(){
+  const grid=document.querySelector('.lobbyModes'); if(!grid || grid.dataset.organized) return;
+  const cards=[...grid.querySelectorAll('.modeCard')]; grid.textContent='';
+  const groups=[['standard',['Normal','Endless','Boss Rush','Speedrun']],['challenge',['Hardcore','Summoner Chaos','Hero Mayhem','One Life']],['extreme',['Unkillable','Endless Unkillable','Endless Unkillable Hardcore Speedrun','Endless Unkillable Hardcore Speedrun Boss Mega Rush Ultra']]];
+  groups.forEach(([name,modes])=>{const wrap=document.createElement('div');wrap.className='modeGroup';wrap.dataset.group=name;const title=document.createElement('div');title.className='modeGroupTitle';title.textContent=name.toUpperCase()+' MODES';const inner=document.createElement('div');inner.className='modeGroupGrid';cards.filter(c=>modes.includes(c.dataset.mode)).forEach(c=>inner.appendChild(c));wrap.append(title,inner);grid.appendChild(wrap)});
+  grid.dataset.organized='true';
+  const section=document.getElementById('modeSelectSection'); const more=document.createElement('button'); more.id='moreModesBtn';more.type='button';more.textContent='MORE MODES • CHALLENGE + EXTREME';more.setAttribute('aria-expanded','false');more.onclick=toggleMoreModes;section.appendChild(more);
+}
+function setupUltraUiPolish(){
+  const lobbyCard=document.getElementById('lobbyCard');
+  if(!lobbyCard) return;
+  const nav=document.createElement('nav'); nav.id='lobbyNav';nav.setAttribute('role','tablist');nav.setAttribute('aria-label','Lobby sections');
+  [['play','PLAY'],['units','UNITS'],['pass','PASS'],['boss','BOSS LAB'],['settings','SETTINGS']].forEach(([screen,label])=>{const b=document.createElement('button');b.type='button';b.className='lobbyNavTab'+(screen==='play'?' active':'');b.dataset.screen=screen;b.textContent=label;b.setAttribute('role','tab');b.setAttribute('aria-selected',screen==='play'?'true':'false');b.onclick=()=>setLobbyScreen(screen,b);nav.appendChild(b)});
+  lobbyCard.insertBefore(nav,lobbyCard.firstChild);
+  const heroCopy=document.querySelector('.lobbyHeroCopy');
+  if(heroCopy && !document.getElementById('playLoadoutPreview')){
+    const preview=document.createElement('div'); preview.id='playLoadoutPreview'; preview.innerHTML='<span>QUICK LOADOUT • SELECT A SLOT TO PLACE</span>';
+    quickSlotTypes.forEach(type=>{const info=unitIconInfo(type),b=document.createElement('button');b.type='button';b.className='lobbyLoadoutSlot';b.dataset.unit=type;b.innerHTML=info.icon+'<small>'+upgradeDisplayName(type)+'</small>';b.onclick=()=>selectQuickUnit(type,b);preview.appendChild(b)});
+    heroCopy.appendChild(preview);
+  }
+  const roleHeader=document.querySelector('.unitIndexHeader'); const guide=document.getElementById('unitRoleGuide');
+  if(roleHeader && guide && !document.getElementById('roleGuideBtn')){const b=document.createElement('button');b.id='roleGuideBtn';b.type='button';b.textContent='ROLE GUIDE';b.setAttribute('aria-expanded','false');b.onclick=toggleRoleGuide;roleHeader.appendChild(b)}
+  const passHeader=document.querySelector('.passCenterHeader'); const passTabs=document.getElementById('passTabs');
+  if(passTabs && !document.getElementById('passSummary')){const summary=document.createElement('div');summary.id='passSummary';passTabs.parentNode.insertBefore(summary,passTabs);const b=document.createElement('button');b.id='passFullTrackToggle';b.type='button';b.textContent='VIEW FULL REWARD TRACK';b.setAttribute('aria-expanded','false');b.onclick=togglePassFullTrack;passTabs.parentNode.insertBefore(b,passTabs.nextSibling)}
+  const settings=document.createElement('aside');settings.id='settingsDrawer';settings.className='uiDrawer';settings.innerHTML='<button class="uiDrawerClose" type="button" aria-label="Close settings">✕</button><h3>⚙ SETTINGS</h3><p>Audio preferences are saved locally and missing files fall back safely.</p>';
+  const audio=document.getElementById('audioSettings'); if(audio) settings.appendChild(audio); document.body.appendChild(settings); settings.querySelector('.uiDrawerClose').onclick=()=>closeUiDrawer('settingsDrawer');
+  const automation=document.createElement('aside');automation.id='automationDrawer';automation.className='uiDrawer';automation.innerHTML='<button class="uiDrawerClose" type="button" aria-label="Close automation">✕</button><h3>⚙ AUTOMATION</h3><p class="automationHint">Automation never changes unit stats: it only spends available upgrade currency and awakens eligible heroes.</p><div id="automationPanel"></div>'; const autoPanel=automation.querySelector('#automationPanel'); ['autoUpgradeBtn','autoAwakenBtn'].forEach(id=>{const el=document.getElementById(id);if(el)autoPanel.appendChild(el)}); document.body.appendChild(automation); automation.querySelector('.uiDrawerClose').onclick=()=>closeUiDrawer('automationDrawer');
+  const hud=document.getElementById('hud'); if(hud && !document.getElementById('battleSettingsBtn')){const settingsBtn=document.createElement('button');settingsBtn.id='battleSettingsBtn';settingsBtn.type='button';settingsBtn.textContent='⚙ SETTINGS';settingsBtn.onclick=toggleBattleSettings;hud.appendChild(settingsBtn);const autoBtn=document.createElement('button');autoBtn.id='automationBtn';autoBtn.type='button';autoBtn.textContent='⚙ AUTOMATION';autoBtn.onclick=toggleAutomationPanel;hud.appendChild(autoBtn)}
+  const pickerActions=document.querySelector('.gamePickerHeaderActions'); if(pickerActions && !document.getElementById('gameUnitPickerClose')){const close=document.createElement('button');close.id='gameUnitPickerClose';close.type='button';close.textContent='CLOSE';close.onclick=()=>toggleFullUnitPicker(false);pickerActions.appendChild(close)}
+  const admin=document.getElementById('adminToggleBtn'); if(admin) admin.title='Open admin tools';
+  organizeLobbyModes(); renderQuickUnitHotbar(); decorateBattlefield();
+  setLobbyScreen('play'); renderPassSummary();
+}
+
 addRoleBadgesToLobby();
 enhanceUnitIndexCards();
 restoreSavedProgress();
@@ -20456,6 +20771,8 @@ enhanceGameUnitPickerCards();
 setupComputerAndIPadPicker();
 refreshAutomationButtons();
 updateBattleHud(true);
+setupUltraUiPolish();
+if(typeof selected==='string') showPlacementCursor();
 requestAnimationFrame(loop)
 
 
